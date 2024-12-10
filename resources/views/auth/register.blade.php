@@ -6,7 +6,7 @@
       <div class="flex flex-wrap justify-center -mx-3">
         <div class="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
           <h1 class="mt-12 mb-2 text-white">Welcome!</h1>
-          <p class="text-white">Use these awesome forms to login or create new account in your project for free.</p>
+          <p class="text-white">Please register your account to log in to the ebook</p>
         </div>
       </div>
     </div>
