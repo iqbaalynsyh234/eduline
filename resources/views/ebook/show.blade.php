@@ -4,7 +4,6 @@
         pointer-events: none;
     }
 </style>
-
 <div class="container">
     <h3>{{ $ebook->name }}</h3>
     <iframe src="{{ $filePath }}" width="100%" height="800px" id="pdfIframe" style="border: none;" sandbox="allow-scripts allow-same-origin">

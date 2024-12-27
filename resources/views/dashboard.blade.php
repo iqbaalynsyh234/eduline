@@ -1,337 +1,801 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>Ebook - Siswa Dashboard</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Nucleo Icons -->
-    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-    <!-- Popper -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <!-- Main Styling -->
-    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5') }}" rel="stylesheet" />
+  <!-- Page Title Here -->
+  <title>
+    Akademi - NodeJs School and Education Management Admin Dashboard Template
+  </title>
+  <!-- FAVICONS ICON -->
+  <link rel="shortcut icon" type="image/png" href="{{ asset('eduline/images/favicon.png') }}" />
+  <link href="{{ asset('eduline/vendor/wow-master/css/libs/animate.css') }}" rel="stylesheet" />
+  <link href="{{ asset('eduline/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Plugins css start-->
+  <link href="{{ asset('eduline/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}"
+    rel="stylesheet" />
+  <link href="{{ asset('eduline/vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet" />
+  <link href="{{ asset('eduline/vendor/datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
+
+  <link href="{{asset('eduline/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('eduline/vendor/swiper/css/swiper-bundle.min.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+  <link href="{{asset('eduline/css/style.css')}}" rel="stylesheet" />
+
 </head>
 
-<body class="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
-    <!-- sidenav  -->
-    <aside
-        class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
-        <div class="h-19.5">
-            <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
-                sidenav-close></i>
-            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
-                <img src="#"
-                    class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8"
-                    alt="" />
-                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Ebook Sofware Management</span>
-            </a>
-        </div>
-
-        <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
-
-        <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
-            <ul class="flex flex-col pl-0 mb-0">
-                <li class="mt-0.5 w-full">
-                    <a class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors"
-                        href="{{route('dashboard')}}">
-                        <div
-                            class="bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                            <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>shop</title>
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF"
-                                        fill-rule="nonzero">
-                                        <g transform="translate(1716.000000, 291.000000)">
-                                            <g transform="translate(0.000000, 148.000000)">
-                                                <path class="opacity-60"
-                                                    d="M46.7199583,10.7414583 L40.8449583,0.949791667 C40.4909749,0.360605034 39.8540131,0 39.1666667,0 L7.83333333,0 C7.1459869,0 6.50902508,0.360605034 6.15504167,0.949791667 L0.280041667,10.7414583 C0.0969176761,11.0460037 -1.23209662e-05,11.3946378 -1.23209662e-05,11.75 C-0.00758042603,16.0663731 3.48367543,19.5725301 7.80004167,19.5833333 L7.81570833,19.5833333 C9.75003686,19.5882688 11.6168794,18.8726691 13.0522917,17.5760417 C16.0171492,20.2556967 20.5292675,20.2556967 23.494125,17.5760417 C26.4604562,20.2616016 30.9794188,20.2616016 33.94575,17.5760417 C36.2421905,19.6477597 39.5441143,20.1708521 42.3684437,18.9103691 C45.1927731,17.649886 47.0084685,14.8428276 47.0000295,11.75 C47.0000295,11.3946378 46.9030823,11.0460037 46.7199583,10.7414583 Z">
-                                                </path>
-                                                <path class=""
-                                                    d="M39.198,22.4912623 C37.3776246,22.4928106 35.5817531,22.0149171 33.951625,21.0951667 L33.92225,21.1107282 C31.1430221,22.6838032 27.9255001,22.9318916 24.9844167,21.7998837 C24.4750389,21.605469 23.9777983,21.3722567 23.4960833,21.1018359 L23.4745417,21.1129513 C20.6961809,22.6871153 17.4786145,22.9344611 14.5386667,21.7998837 C14.029926,21.6054643 13.533337,21.3722507 13.0522917,21.1018359 C11.4250962,22.0190609 9.63246555,22.4947009 7.81570833,22.4912623 C7.16510551,22.4842162 6.51607673,22.4173045 5.875,22.2911849 L5.875,44.7220845 C5.875,45.9498589 6.7517757,46.9451667 7.83333333,46.9451667 L19.5833333,46.9451667 L19.5833333,33.6066734 L27.4166667,33.6066734 L27.4166667,46.9451667 L39.1666667,46.9451667 C40.2482243,46.9451667 41.125,45.9498589 41.125,44.7220845 L41.125,22.2822926 C40.4887822,22.4116582 39.8442868,22.4815492 39.198,22.4912623 Z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
-
-    <!-- end sidenav -->
-
-    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
-        <!-- Navbar -->
-        <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start"
-            navbar-main navbar-scroll="true">
-            <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
-                <nav>
-                    <!-- breadcrumb -->
-                    <ol class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16">
-                        <li class="leading-normal text-sm">
-                            <a class="opacity-50 text-slate-700" href="javascript:;">Pages</a>
-                        </li>
-                        <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
-                            aria-current="page">Dashboard</li>
-                    </ol>
-                    <h6 class="mb-0 font-bold capitalize">Dashboard</h6>
-                </nav>
-
-                <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
-                    <div class="flex items-center md:ml-auto md:pr-4">
-                        <div class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
-                            <span
-                                class="text-sm ease-soft leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
-                                <i class="fas fa-search"></i>
-                            </span>
-                            <input type="text"
-                                class="pl-8.75 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
-                                placeholder="Type here..." />
-                        </div>
-                    </div>
-                    <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
-                        <li class="flex items-center relative">
-                            @auth
-                                <!-- User is logged in, show user info with dropdown for logout -->
-                                <button class="flex items-center text-sm text-slate-500 transition-all ease-nav-brand"
-                                    id="user-menu-button">
-                                    <i class="fa fa-user sm:mr-1"></i>
-                                    <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
-                                </button>
-                                <div id="user-dropdown"
-                                    class="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-48 hidden z-50">
-                                    <ul class="py-2">
-                                        <li>
-                                            <!-- Logout Link -->
-                                            <a href="{{ route('logout') }}"
-                                                class="block px-4 py-2 text-sm text-slate-700 hover:bg-gray-100"
-                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                Logout
-                                            </a>
-                                            <!-- Logout Form -->
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            @else
-                                <!-- User is not logged in, show "Sign In" link -->
-                                <a href="{{ route('login') }}"
-                                    class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500">
-                                    <i class="fa fa-user sm:mr-1"></i>
-                                    <span class="hidden sm:inline">Sign In</span>
-                                </a>
-                            @endauth
-                        </li>
-
-                        <li class="flex items-center pl-4 xl:hidden">
-                            <a href="javascript:;"
-                                class="block p-0 transition-all ease-nav-brand text-sm text-slate-500" sidenav-trigger>
-                                <div class="w-4.5 overflow-hidden">
-                                    <i
-                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
-                                    <i
-                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
-                                    <i
-                                        class="ease-soft relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="flex items-center px-4">
-                            <a href="javascript:;" class="p-0 transition-all text-sm ease-nav-brand text-slate-500">
-                                <i fixed-plugin-button-nav class="cursor-pointer fa fa-cog"></i>
-                                <!-- fixed-plugin-button-nav  -->
-                            </a>
-                        </li>
-
-                        <!-- notifications -->
-
-                        <li class="relative flex items-center pr-2">
-                            <p class="hidden transform-dropdown-show"></p>
-                            <a href="javascript:;"
-                                class="block p-0 transition-all text-sm ease-nav-brand text-slate-500" dropdown-trigger
-                                aria-expanded="false">
-                                <i class="cursor-pointer fa fa-bell"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- end Navbar -->
-        <div class="w-full px-6 py-6 mx-auto">
-            <!-- row 1 -->
-            <div class="flex flex-wrap -mx-3">
-                <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
-                    <thead class="align-bottom">
-                        <tr>
-                            <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Name</th>
-                            <th
-                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                File Path</th>
-                            <th
-                                class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($ebooks as $ebook)
-                            <tr>
-                                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-2 py-1">
-                                        <div>
-                                            <i class="fa fa-book sm:mr-1"></i>
-                                        </div>
-                                        <div class="flex flex-col justify-center">
-                                            <h6 class="mb-0 text-sm leading-normal">{{ $ebook->name }}</h6>
-                                            <p class="mb-0 text-xs leading-tight text-slate-400">{{ $ebook->file_path }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 text-xs font-semibold leading-tight">{{ $ebook->file_path }}</p>
-                                </td>
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <a href="{{ route('ebook.show', $ebook->id) }}"
-                                        class="text-xs font-semibold leading-tight text-slate-400">View</a>
-                                    <a href="{{ route('ebook.delete', $ebook->id) }}"
-                                        class="text-xs font-semibold leading-tight text-slate-400 ml-2">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <footer class="pt-4">
-                <div class="w-full px-6 mx-auto">
-                    <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
-                        <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                            <div class="leading-normal text-center text-sm text-slate-500 lg:text-left">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear() + ",");
-                                </script>
-                               Ebook Management System 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-        <!-- end cards -->
-    </main>
-    <div fixed-plugin>
-        <a fixed-plugin-button
-            class="bottom-7.5 right-7.5 text-xl z-990 shadow-soft-lg rounded-circle fixed cursor-pointer bg-white px-4 py-2 text-slate-700">
-            <i class="py-2 pointer-events-none fa fa-cog"> </i>
-        </a>
-        <!-- -right-90 in loc de 0-->
-        <div fixed-plugin-card
-            class="z-sticky shadow-soft-3xl w-90 ease-soft -right-90 fixed top-0 left-auto flex h-full min-w-0 flex-col break-words rounded-none border-0 bg-white bg-clip-border px-2.5 duration-200">
-            <div class="px-6 pt-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-                <div class="float-left">
-                    <h5 class="mt-4 mb-0">Configuration Tema</h5>
-                    <p>See our dashboard options.</p>
-                </div>
-                <div class="float-right mt-6">
-                    <button fixed-plugin-close-button
-                        class="inline-block p-0 mb-4 font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer hover:scale-102 leading-pro text-xs ease-soft-in tracking-tight-soft bg-150 bg-x-25 active:opacity-85 text-slate-700">
-                        <i class="fa fa-close"></i>
-                    </button>
-                </div>
-                <!-- End Toggle Button -->
-            </div>
-            <hr class="h-px mx-0 my-1 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
-            <div class="flex-auto p-6 pt-0 sm:pt-4">
-                <!-- Sidebar Backgrounds -->
-                <div>
-                    <h6 class="mb-0">Sidebar Colors</h6>
-                </div>
-                <a href="javascript:void(0)">
-                    <div class="my-2 text-left" sidenav-colors>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-purple-700 to-pink-500 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-slate-700 text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            active-color data-color-from="purple-700" data-color-to="pink-500"
-                            onclick="sidebarColor(this)"></span>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-gray-900 to-slate-800 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="gray-900" data-color-to="slate-800" onclick="sidebarColor(this)"></span>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-blue-600 to-cyan-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="blue-600" data-color-to="cyan-400" onclick="sidebarColor(this)"></span>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-green-600 to-lime-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="green-600" data-color-to="lime-400" onclick="sidebarColor(this)"></span>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-red-500 to-yellow-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="red-500" data-color-to="yellow-400" onclick="sidebarColor(this)"></span>
-                        <span
-                            class="text-xs rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-red-600 to-rose-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="red-600" data-color-to="rose-400" onclick="sidebarColor(this)"></span>
-                    </div>
-                </a>
-                <!-- Sidenav Type -->
-                <div class="mt-4">
-                    <h6 class="mb-0">Sidenav Type</h6>
-                    <p class="leading-normal text-sm">Choose between 2 different sidenav types.</p>
-                </div>
-                <div class="flex">
-                    <button transparent-style-btn
-                        class="inline-block w-full px-4 py-3 mb-2 font-bold text-center text-white uppercase align-middle transition-all border border-transparent border-solid rounded-lg cursor-pointer xl-max:cursor-not-allowed xl-max:opacity-65 xl-max:pointer-events-none xl-max:bg-gradient-to-tl xl-max:from-purple-700 xl-max:to-pink-500 xl-max:text-white xl-max:border-0 hover:scale-102 hover:shadow-soft-xs active:opacity-85 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-purple-700 to-pink-500 bg-fuchsia-500 hover:border-fuchsia-500"
-                        data-class="bg-transparent" active-style>Transparent</button>
-                    <button white-style-btn
-                        class="inline-block w-full px-4 py-3 mb-2 ml-2 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg cursor-pointer xl-max:cursor-not-allowed xl-max:opacity-65 xl-max:pointer-events-none xl-max:bg-gradient-to-tl xl-max:from-purple-700 xl-max:to-pink-500 xl-max:text-white xl-max:border-0 hover:scale-102 hover:shadow-soft-xs active:opacity-85 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 border-fuchsia-500 bg-none text-fuchsia-500 hover:border-fuchsia-500"
-                        data-class="bg-white">White</button>
-                </div>
-                <p class="block mt-2 leading-normal text-sm xl:hidden">You can change the sidenav type just on desktop
-                    view.</p>
-                <!-- Navbar Fixed -->
-                <div class="mt-4">
-                    <h6 class="mb-0">Navbar Fixed</h6>
-                </div>
-                <div class="min-h-6 mb-0.5 block pl-0">
-                    <input navbarFixed
-                        class="rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left mt-1 ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                        type="checkbox" />
-                </div>
-                <hr class="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent sm:my-6" />
-            </div>
-        </div>
+<body>
+  <!--****  Preloader start *******-->
+  <div id="preloader">
+    <div class="loader">
+      <div class="dots">
+        <div class="dot mainDot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
     </div>
+  </div>
+  <!--***** Preloader end *******-->
+
+  <div id="main-wrapper" class="wallet-open active">
+    <!--**** Nav header start *******-->
+    <div class="nav-header">
+      <a href="index.html" class="brand-logo">
+        <svg class="logo-abbr" width="40" height="40" viewBox="0 0 48 54" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <rect y="3" width="48" height="48" rx="16" fill="#FB7D5B" />
+          <path
+            d="M28.964 35.536H19.532L18.02 40H11.576L20.72 14.728H27.848L36.992 40H30.476L28.964 35.536ZM27.38 30.784L24.248 21.532L21.152 30.784H27.38Z"
+            fill="white" />
+        </svg>
+        <div class="brand-title">
+          <svg width="140" height="30" viewBox="0 0 167 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M17.964 24.536H8.532L7.02 29H0.576L9.72 3.728H16.848L25.992 29H19.476L17.964 24.536ZM16.38 19.784L13.248 10.532L10.152 19.784H16.38ZM41.051 29L34.931 20.576V29H28.775V2.36H34.931V17.084L41.015 8.912H48.611L40.259 18.992L48.683 29H41.051ZM49.8049 18.92C49.8049 16.856 50.1889 15.044 50.9569 13.484C51.7489 11.924 52.8169 10.724 54.1609 9.884C55.5049 9.044 57.0049 8.624 58.6609 8.624C60.0769 8.624 61.3129 8.912 62.3689 9.488C63.4489 10.064 64.2769 10.82 64.8529 11.756V8.912H71.0089V29H64.8529V26.156C64.2529 27.092 63.4129 27.848 62.3329 28.424C61.2769 29 60.0409 29.288 58.6249 29.288C56.9929 29.288 55.5049 28.868 54.1609 28.028C52.8169 27.164 51.7489 25.952 50.9569 24.392C50.1889 22.808 49.8049 20.984 49.8049 18.92ZM64.8529 18.956C64.8529 17.42 64.4209 16.208 63.5569 15.32C62.7169 14.432 61.6849 13.988 60.4609 13.988C59.2369 13.988 58.1929 14.432 57.3289 15.32C56.4889 16.184 56.0689 17.384 56.0689 18.92C56.0689 20.456 56.4889 21.68 57.3289 22.592C58.1929 23.48 59.2369 23.924 60.4609 23.924C61.6849 23.924 62.7169 23.48 63.5569 22.592C64.4209 21.704 64.8529 20.492 64.8529 18.956ZM74.2385 18.92C74.2385 16.856 74.6225 15.044 75.3905 13.484C76.1825 11.924 77.2505 10.724 78.5945 9.884C79.9385 9.044 81.4385 8.624 83.0945 8.624C84.4145 8.624 85.6145 8.9 86.6945 9.452C87.7985 10.004 88.6625 10.748 89.2865 11.684V2.36H95.4425V29H89.2865V26.12C88.7105 27.08 87.8825 27.848 86.8025 28.424C85.7465 29 84.5105 29.288 83.0945 29.288C81.4385 29.288 79.9385 28.868 78.5945 28.028C77.2505 27.164 76.1825 25.952 75.3905 24.392C74.6225 22.808 74.2385 20.984 74.2385 18.92ZM89.2865 18.956C89.2865 17.42 88.8545 16.208 87.9905 15.32C87.1505 14.432 86.1185 13.988 84.8945 13.988C83.6705 13.988 82.6265 14.432 81.7625 15.32C80.9225 16.184 80.5025 17.384 80.5025 18.92C80.5025 20.456 80.9225 21.68 81.7625 22.592C82.6265 23.48 83.6705 23.924 84.8945 23.924C86.1185 23.924 87.1505 23.48 87.9905 22.592C88.8545 21.704 89.2865 20.492 89.2865 18.956ZM118.832 18.632C118.832 19.208 118.796 19.808 118.724 20.432H104.792C104.888 21.68 105.284 22.64 105.98 23.312C106.7 23.96 107.576 24.284 108.608 24.284C110.144 24.284 111.212 23.636 111.812 22.34H118.364C118.028 23.66 117.416 24.848 116.528 25.904C115.664 26.96 114.572 27.788 113.252 28.388C111.932 28.988 110.456 29.288 108.824 29.288C106.856 29.288 105.104 28.868 103.568 28.028C102.032 27.188 100.832 25.988 99.9681 24.428C99.1041 22.868 98.6721 21.044 98.6721 18.956C98.6721 16.868 99.0921 15.044 99.9321 13.484C100.796 11.924 101.996 10.724 103.532 9.884C105.068 9.044 106.832 8.624 108.824 8.624C110.768 8.624 112.496 9.032 114.008 9.848C115.52 10.664 116.696 11.828 117.536 13.34C118.4 14.852 118.832 16.616 118.832 18.632ZM112.532 17.012C112.532 15.956 112.172 15.116 111.452 14.492C110.732 13.868 109.832 13.556 108.752 13.556C107.72 13.556 106.844 13.856 106.124 14.456C105.428 15.056 104.996 15.908 104.828 17.012H112.532ZM147.712 8.696C150.208 8.696 152.188 9.452 153.652 10.964C155.14 12.476 155.884 14.576 155.884 17.264V29H149.764V18.092C149.764 16.796 149.416 15.8 148.72 15.104C148.048 14.384 147.112 14.024 145.912 14.024C144.712 14.024 143.764 14.384 143.068 15.104C142.396 15.8 142.06 16.796 142.06 18.092V29H135.94V18.092C135.94 16.796 135.592 15.8 134.896 15.104C134.224 14.384 133.288 14.024 132.088 14.024C130.888 14.024 129.94 14.384 129.244 15.104C128.572 15.8 128.236 16.796 128.236 18.092V29H122.08V8.912H128.236V11.432C128.86 10.592 129.676 9.932 130.684 9.452C131.692 8.948 132.832 8.696 134.104 8.696C135.616 8.696 136.96 9.02 138.136 9.668C139.336 10.316 140.272 11.24 140.944 12.44C141.64 11.336 142.588 10.436 143.788 9.74C144.988 9.044 146.296 8.696 147.712 8.696ZM163.285 6.824C162.205 6.824 161.317 6.512 160.621 5.888C159.949 5.24 159.613 4.448 159.613 3.512C159.613 2.552 159.949 1.76 160.621 1.136C161.317 0.487998 162.205 0.163998 163.285 0.163998C164.341 0.163998 165.205 0.487998 165.877 1.136C166.573 1.76 166.921 2.552 166.921 3.512C166.921 4.448 166.573 5.24 165.877 5.888C165.205 6.512 164.341 6.824 163.285 6.824ZM166.345 8.912V29H160.189V8.912H166.345Z"
+              fill="white" />
+          </svg>
+        </div>
+      </a>
+      <div class="nav-control">
+        <div class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span><span class="line"></span>
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="11" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect x="11" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect x="22" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect x="11" y="11" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect x="11" y="22" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect width="4" height="4" rx="2" fill="#2A353A" />
+            <rect y="11" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect x="22" y="22" width="4" height="4" rx="2" fill="#2A353A" />
+            <rect y="22" width="4" height="4" rx="2" fill="#2A353A" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!--**** Nav header end  ********-->
+    <!--******** Header start **********-->
+    <div class="header">
+      <div class="header-content">
+        <nav class="navbar navbar-expand">
+          <div class="collapse navbar-collapse justify-content-between">
+            <div class="header-left">
+              <div class="dashboard_bar">
+                <p>Welcome, {{ Auth::user()->full_name }}</p>
+              </div>
+            </div>
+            <ul class="navbar-nav header-right">
+              <li class="nav-item dropdown notification_dropdown all">
+                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                  <svg height="24" class="svg-main-icon" viewBox="0 0 32 32" width="24"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <clipPath id="clip_1">
+                      <path id="artboard_1" clip-rule="evenodd" d="m0 0h32v32h-32z" />
+                    </clipPath>
+                    <g id="select" clip-path="url(#clip_1)">
+                      <path id="Vector"
+                        d="m4.70222 7.16834-.12871-.2574c-.0593-.11861-.13904-.22136-.23922-.30824-.10018-.08689-.21317-.1513-.33898-.19323-.1258-.04194-.25484-.0582-.38711-.0488-.13228.0094-.25772.04375-.37633.10306-.24699.12349-.41414.31622-.50147.5782-.08732.26197-.06923.51645.05426.76344l1.32093 2.64183c.0593.1186.13904.2214.23922.3083.10018.0868.21317.1512.33898.1932.1258.0419.25484.0582.38711.0488.13228-.0094.25772-.0438.37633-.1031.01854-.0092.03678-.0191.05471-.0295s.03552-.0214.05277-.0329l5.99999-3.99995c.1104-.07356.2024-.16543.2762-.27561s.1237-.23029.1497-.36032c.026-.13004.0261-.2601.0004-.39019-.0257-.13008-.0754-.25029-.1489-.36063-.1532-.22977-.3652-.37173-.636-.42588-.2707-.05416-.521-.00465-.7508.14853l-1.94316 1.29545-3.1143 2.07619zm11.29778-1.16834c-.2761 0-.5118.09763-.7071.29289s-.2929.43097-.2929.70711.0976.51184.2929.70711c.1953.19526.431.29289.7071.29289h14c.2761 0 .5118-.09763.7071-.29289.1953-.19527.2929-.43097.2929-.70711s-.0976-.51185-.2929-.70711-.431-.29289-.7071-.29289zm-11.27691 9.1683-.12871-.2574c-.12349-.2469-.31622-.4141-.5782-.5014-.26197-.0874-.51645-.0693-.76344.0542-.11861.0593-.22135.1391-.30824.2393-.08688.1001-.15129.2131-.19323.3389-.04193.1258-.0582.2549-.0488.3871.0094.1323.04376.2578.10306.3764l1.32092 2.6418c.1235.247.31623.4142.5782.5015.26198.0873.51646.0692.76345-.0543.01854-.0092.03678-.0191.05471-.0295s.03552-.0214.05277-.0329l6.00002-3.9999c.2298-.1532.3717-.3652.4259-.636.0541-.2708.0046-.521-.1486-.7508-.1531-.2298-.3651-.3717-.6359-.4259-.2708-.0541-.521-.0046-.7508.1485l-5.05749 3.3717zm11.27691-.1683c-.2761 0-.5118.0976-.7071.2929s-.2929.431-.2929.7071.0976.5118.2929.7071.431.2929.7071.2929h14c.2761 0 .5118-.0976.7071-.2929s.2929-.431.2929-.7071-.0976-.5118-.2929-.7071-.431-.2929-.7071-.2929zm-11.27691 8.1683-.12871-.2574c-.12349-.247-.31622-.4141-.5782-.5014-.26197-.0874-.51645-.0693-.76344.0542-.11861.0593-.22135.1391-.30824.2393-.08688.1001-.15129.2131-.19323.3389-.04193.1258-.0582.2549-.0488.3871.0094.1323.04376.2578.10306.3764l1.32092 2.6418c.1235.247.31623.4142.5782.5015.26198.0873.51646.0692.76345-.0543.01854-.0092.03678-.0191.05471-.0295s.03552-.0214.05277-.0329l6.00002-4c.1103-.0735.2024-.1654.2762-.2756.0738-.1101.1237-.2303.1497-.3603s.0261-.2601.0004-.3902c-.0258-.1301-.0754-.2503-.149-.3606-.1531-.2298-.3651-.3717-.6359-.4259-.2708-.0541-.521-.0046-.7508.1485l-1.94319 1.2955-3.1143 2.0762zm11.27691.8317c-.2761 0-.5118.0976-.7071.2929s-.2929.431-.2929.7071.0976.5118.2929.7071.431.2929.7071.2929h14c.2761 0 .5118-.0976.7071-.2929s.2929-.431.2929-.7071-.0976-.5118-.2929-.7071-.431-.2929-.7071-.2929z"
+                        fill-rule="evenodd" />
+                    </g>
+                  </svg>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end p-0">
+                  <div class="card mb-0">
+                    <div class="card-header border-0 d-block h-auto">
+                      <ul class="d-flex align-items-center justify-content-around">
+                        <li class="nav-item dropdown notification_dropdown">
+                          <a class="nav-link menu-wallet" href="javascript:void(0);">
+                            <svg id="Layer_1" enable-background="new 0 0 512 512" height="18" viewBox="0 0 512 512"
+                              width="18" xmlns="http://www.w3.org/2000/svg">
+                              <g>
+                                <path
+                                  d="m174 240h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z" />
+                                <path
+                                  d="m446 240h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z" />
+                                <path
+                                  d="m392 512c-66.168 0-120-53.832-120-120s53.832-120 120-120 120 53.832 120 120-53.832 120-120 120zm0-208c-48.523 0-88 39.477-88 88s39.477 88 88 88 88-39.477 88-88-39.477-88-88-88z" />
+                                <path
+                                  d="m174 512h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z" />
+                              </g>
+                            </svg>
+                          </a>
+                        </li>
+                        <li class="nav-item dropdown notification_dropdown">
+                          <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
+                            <svg id="icon-light" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                              stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun">
+                              <circle cx="12" cy="12" r="5"></circle>
+                              <line x1="12" y1="1" x2="12" y2="3"></line>
+                              <line x1="12" y1="21" x2="12" y2="23"></line>
+                              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                              <line x1="1" y1="12" x2="3" y2="12"></line>
+                              <line x1="21" y1="12" x2="23" y2="12"></line>
+                              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg id="icon-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                              stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon">
+                              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                          </a>
+                        </li>
+                        <li class="nav-item dropdown notification_dropdown">
+                          <a class="nav-link bell dz-fullscreen" href="javascript:void(0);">
+                            <svg id="icon-full" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+                              stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                              class="css-i6dzq1">
+                              <path
+                                d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+                                style="
+                                    stroke-dasharray: 37, 57;
+                                    stroke-dashoffset: 0;
+                                  "></path>
+                            </svg>
+                            <svg id="icon-minimize" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                              stroke="A098AE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                              class="feather feather-minimize">
+                              <path
+                                d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
+                                style="
+                                    stroke-dasharray: 37, 57;
+                                    stroke-dashoffset: 0;
+                                  "></path>
+                            </svg>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item dropdown notification_dropdown search-area-header">
+                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M27.6 25.8L22 20.2C23.3 18.5 24.1 16.4 24.1 14.1C24.1 8.60001 19.6 4.10001 14.1 4.10001C8.6 4.10001 4 8.60001 4 14.1C4 19.6 8.5 24.1 14 24.1C16.3 24.1 18.5 23.3 20.2 21.9L25.8 27.5C26 27.7 26.4 27.9 26.7 27.9C27 27.9 27.3 27.8 27.6 27.5C28.1 27.1 28.1 26.3 27.6 25.8ZM6.5 14.1C6.5 10 9.9 6.60001 14 6.60001C18.1 6.60001 21.5 10 21.5 14.1C21.5 18.2 18.1 21.6 14 21.6C9.9 21.6 6.5 18.3 6.5 14.1Z"
+                      fill="#A098AE" />
+                  </svg>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end p-0 rounded">
+                  <div class="card mb-0">
+                    <div class="card-body px-0">
+                      <div class="px-3">
+                        <div class="input-group search-area w-100">
+                          <input type="text" class="form-control" placeholder="Search here..." />
+                          <span class="input-group-text">
+                            <a href="javascript:void(0)">
+                              <svg width="15" height="15" viewBox="0 0 18 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M17.5605 15.4395L13.7527 11.6317C14.5395 10.446 15 9.02625 15 7.5C15 3.3645 11.6355 0 7.5 0C3.3645 0 0 3.3645 0 7.5C0 11.6355 3.3645 15 7.5 15C9.02625 15 10.446 14.5395 11.6317 13.7527L15.4395 17.5605C16.0245 18.1462 16.9755 18.1462 17.5605 17.5605C18.1462 16.9747 18.1462 16.0252 17.5605 15.4395V15.4395ZM2.25 7.5C2.25 4.605 4.605 2.25 7.5 2.25C10.395 2.25 12.75 4.605 12.75 7.5C12.75 10.395 10.395 12.75 7.5 12.75C4.605 12.75 2.25 10.395 2.25 7.5V7.5Z"
+                                  fill="#01A3FF"></path>
+                              </svg>
+                            </a>
+                          </span>
+                        </div>
+                        <h6 class="my-2 mt-3">Recently Searched:</h6>
+                      </div>
+                      <div class="dlab-scroll px-3 mt-3 height300">
+                        <ul class="d-flex align-items-center mb-3">
+                          <li>
+                          </li>
+                          <li class="ms-auto">
+                            <i class="fa-solid fa-trash"></i>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown notification_dropdown">
+                <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
+                  <i id="icon-light-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-sun">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <line x1="12" y1="1" x2="12" y2="3"></line>
+                      <line x1="12" y1="21" x2="12" y2="23"></line>
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                      <line x1="1" y1="12" x2="3" y2="12"></line>
+                      <line x1="21" y1="12" x2="23" y2="12"></line>
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                  </i>
+                  <i id="icon-dark-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-moon">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                  </i>
+                </a>
+              </li>
+              <li class="nav-item dropdown notification_dropdown">
+                <a class="nav-link bell dz-fullscreen" href="javascript:void(0);">
+                  <svg id="icon-full-1" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                    <path
+                      d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+                      style="stroke-dasharray: 37, 57; stroke-dashoffset: 0"></path>
+                  </svg>
+                  <svg id="icon-minimize-1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="A098AE"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minimize">
+                    <path
+                      d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"
+                      style="stroke-dasharray: 37, 57; stroke-dashoffset: 0"></path>
+                  </svg>
+                </a>
+              </li>
+              <li class="nav-item bell-icon blink dropdown notification_dropdown">
+                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M25.3677 18.9391V9.86768C25.3677 4.70215 21.1655 0.5 16 0.5C10.8345 0.5 6.63232 4.70215 6.63232 9.86768V18.9397C4.96704 19.4224 3.73828 20.9544 3.73828 22.8374C3.73828 25.0386 5.5293 26.8296 7.73096 26.8296H11.377V26.877C11.377 29.4263 13.4507 31.5 16 31.5C18.5493 31.5 20.6231 29.4263 20.6231 26.8769V26.8296H24.2691C26.4707 26.8296 28.2617 25.0386 28.2617 22.7583C28.2617 20.9406 27.033 19.4198 25.3677 18.9391ZM9.63232 9.86768C9.63232 6.35645 12.4888 3.5 16 3.5C19.5112 3.5 22.3677 6.35645 22.3677 9.86768V18.7661H9.63232V9.86768ZM17.6231 26.8769C17.6231 27.772 16.895 28.5 16 28.5C15.105 28.5 14.377 27.772 14.377 26.8769V26.8296H17.623V26.8769H17.6231ZM24.269 23.8296H7.73096C7.1836 23.8296 6.73828 23.3843 6.73828 22.7583C6.73828 22.2114 7.18359 21.7661 7.73096 21.7661H24.2691C24.8164 21.7661 25.2617 22.2114 25.2617 22.8374C25.2617 23.3843 24.8164 23.8296 24.269 23.8296Z"
+                      fill="#A098AE" />
+                  </svg>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end of-visible">
+                  <div class="dropdown-header">
+                    <h4 class="title mb-0">Notification</h4>
+                    <a href="javascript:void(0);" class="d-none">
+                      <i class="flaticon-381-settings-6"></i>
+                    </a>
+                  </div>
+                  <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height: 380px">
+                    <ul class="timeline">
+                      <li>
+                        <div class="timeline-panel">
+                          <div class="media me-2">
+                            <img alt="image" width="50" src="images/avatar/1.jpg" />
+                          </div>
+                          <div class="media-body">
+                            <h6 class="mb-1">Dr sultads Send you Photo</h6>
+                            <small class="d-block">29 July 2020 - 02:26 PM</small>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <a class="all-notification" href="javascript:void(0);">See all notifications <i
+                      class="ti-arrow-end"></i>
+                  </a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="dropdown header-profile2">
+                  <a class="nav-link ms-0" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <div class="header-info2 d-flex align-items-center">
+                      <div class="d-flex align-items-center sidebar-info"></div>
+                      <img src="images/user.jpg" alt="" />
+                    </div>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end pb-0" style="">
+                    <div class="card mb-0">
+                      <div class="card-header p-3">
+                        <ul class="d-flex align-items-center">
+                          <li>
+                            <img src="images/user.jpg" class="ms-0" alt="" />
+                          </li>
+                          <li class="ms-2">
+                            <h4 class="mb-0">{{ Auth::user()->full_name }}</h4>
+                            <span>{{ Auth::user()->getRoleNames()->first() }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="card-body p-3">
+                        <a href="app-profile.html" class="dropdown-item ai-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <polygon points="0 0 24 0 24 24 0 24" />
+                              <path
+                                d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                              <path
+                                d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                fill="var(--primary)" fill-rule="nonzero" />
+                            </g>
+                          </svg>
+                          <span class="ms-2">Profile </span>
+                        </a>
+                        <a href="email-inbox.html" class="dropdown-item ai-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <rect x="0" y="0" width="24" height="24" />
+                              <path
+                                d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z"
+                                fill="#000000" />
+                              <circle fill="var(--primary)" opacity="0.3" cx="19.5" cy="17.5" r="2.5" />
+                            </g>
+                          </svg>
+                          <span class="ms-2">Notification </span>
+                        </a>
+                      </div>
+                      <div class="card-footer text-center p-3">
+                        <form method="POST" action="{{ route('logout') }}">
+                          @csrf
+                          <button type="submit" class="dropdown-item ai-icon btn btn-primary light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                              fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round">
+                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                              <polyline points="16 17 21 12 16 7"></polyline>
+                              <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            <span class="ms-2 text-primary">Logout</span>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <!--******* Header end *************-->
+
+    <!--******* Sidebar start **********-->
+    <div class="dlabnav">
+      <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+          <li>
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+              <i class="material-symbols-outlined">home</i>
+              <span class="nav-text">Dashboard</span>
+            </a>
+            <ul aria-expanded="false">
+              <li>
+                <a href="index.html">Dashboard Light</a>
+              </li>
+              <li>
+                <a href="index-2.html">Dashboard Dark</a>
+              </li>
+              <li>
+                <a href="finance.html">Finance</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+              <i class="material-symbols-outlined">school</i>
+              <span class="nav-text">Student</span>
+            </a>
+            <ul aria-expanded="false">
+              <li>
+                <a href="student.html">Student</a>
+              </li>
+              <li>
+                <a href="student-detail.html">Student Detail</a>
+              </li>
+              <li>
+                <a href="add-student.html">Add New Student</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+              <i class="material-symbols-outlined">person</i>
+              <span class="nav-text">Teacher</span>
+            </a>
+            <ul aria-expanded="false">
+              <li>
+                <a href="teacher.html">Teacher</a>
+              </li>
+              <li>
+                <a href="teacher-detail.html">Teacher Detail</a>
+              </li>
+              <li>
+                <a href="add-teacher.html">Add New Teacher</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="copyright">
+          <p>
+            <strong>Eduline Dashboard</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--******** Sidebar end ***********-->
+
+    <!-- Container starts-->
+    <div class="content-body">
+      <!-- row -->
+      <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-body pb-xl-4 pb-sm-3 pb-0">
+                <div class="row">
+                  <div class="col-xl-3 col-6">
+                    <div class="content-box">
+                      <div class="icon-box icon-box-xl std-data">
+                        <svg width="25" height="25" viewBox="0 0 30 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12.9288 37.75H3.75C1.67875 37.75 0 36.0713 0 34V23.5863C0 21.7738 1.29625 20.2213 3.07875 19.8975C5.72125 19.4163 10.2775 18.5875 12.855 18.12C14.2737 17.8612 15.7263 17.8612 17.145 18.12C19.7225 18.5875 24.2788 19.4163 26.9213 19.8975C28.7038 20.2213 30 21.7738 30 23.5863C30 26.3125 30 31.0825 30 34C30 36.0713 28.3212 37.75 26.25 37.75H12.9288ZM24.785 22.05L24.79 22.0563C25.0088 22.3838 25.06 22.795 24.9287 23.1662L24.0462 25.6662C23.9312 25.9925 23.685 26.2575 23.3675 26.3963L21.7075 27.12L22.3675 28.4412C22.5525 28.81 22.5425 29.2462 22.3425 29.6075L19.2075 35.25H26.25C26.94 35.25 27.5 34.69 27.5 34C27.5 31.0825 27.5 26.3125 27.5 23.5863C27.5 22.9825 27.0675 22.465 26.4738 22.3562L24.785 22.05ZM21.3663 21.4275L16.6975 20.5788C15.575 20.375 14.425 20.375 13.3025 20.5788L8.63375 21.4275L7.63625 22.9238L8.13 24.3213L10.5 25.3537C10.8138 25.4912 11.0575 25.7512 11.175 26.0737C11.2925 26.3962 11.2712 26.7525 11.1175 27.0588L10.1625 28.9688L13.6525 35.25H16.3475L19.8375 28.9688L18.8825 27.0588C18.7288 26.7525 18.7075 26.3962 18.825 26.0737C18.9425 25.7512 19.1862 25.4912 19.5 25.3537L21.87 24.3213L22.3638 22.9238L21.3663 21.4275ZM5.215 22.05L3.52625 22.3562C2.9325 22.465 2.5 22.9825 2.5 23.5863V34C2.5 34.69 3.06 35.25 3.75 35.25H10.7925L7.6575 29.6075C7.4575 29.2462 7.4475 28.81 7.6325 28.4412L8.2925 27.12L6.6325 26.3963C6.315 26.2575 6.06875 25.9925 5.95375 25.6662L5.07125 23.1662C4.94 22.795 4.99125 22.3838 5.21 22.0563L5.215 22.05ZM23.75 29V31.5C23.75 32.19 24.31 32.75 25 32.75C25.69 32.75 26.25 32.19 26.25 31.5V29C26.25 28.31 25.69 27.75 25 27.75C24.31 27.75 23.75 28.31 23.75 29ZM15 0.25C10.5163 0.25 6.875 3.89125 6.875 8.375C6.875 12.8587 10.5163 16.5 15 16.5C19.4837 16.5 23.125 12.8587 23.125 8.375C23.125 3.89125 19.4837 0.25 15 0.25ZM15 2.75C18.105 2.75 20.625 5.27 20.625 8.375C20.625 11.48 18.105 14 15 14C11.895 14 9.375 11.48 9.375 8.375C9.375 5.27 11.895 2.75 15 2.75Z"
+                            fill="white" />
+                        </svg>
+                      </div>
+                      <div class="chart-num">
+                        <p>Students</p>
+                        <h2 class="font-w700 mb-0">932</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-6">
+                    <div class="content-box">
+                      <div class="teach-data icon-box icon-box-xl">
+                        <svg width="25" height="25" viewBox="0 0 30 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0 34C0 36.0713 1.67875 37.75 3.75 37.75H26.25C28.3212 37.75 30 36.0713 30 34C30 31.0825 30 26.3125 30 23.5863C30 21.7738 28.7038 20.2213 26.9213 19.8975C24.2788 19.4163 19.7225 18.5875 17.145 18.12C15.7263 17.8612 14.2737 17.8612 12.855 18.12C10.2775 18.5875 5.72125 19.4163 3.07875 19.8975C1.29625 20.2213 0 21.7738 0 23.5863V34ZM17.885 20.795L19.7612 27.9288C20.0075 28.865 19.6775 29.8588 18.92 30.4638C18.28 30.9738 17.2713 31.7788 16.5713 32.3388C15.6525 33.0713 14.3475 33.0713 13.4287 32.3388C12.7287 31.7788 11.72 30.9738 11.08 30.4638C10.3225 29.8588 9.9925 28.865 10.2388 27.9288L12.115 20.795L3.52625 22.3562C2.9325 22.465 2.5 22.9825 2.5 23.5863V34C2.5 34.69 3.06 35.25 3.75 35.25C8.98 35.25 21.02 35.25 26.25 35.25C26.94 35.25 27.5 34.69 27.5 34C27.5 31.0825 27.5 26.3125 27.5 23.5863C27.5 22.9825 27.0675 22.465 26.4738 22.3562L17.885 20.795ZM15.2038 20.4288C15.0675 20.425 14.9325 20.425 14.7962 20.4288L12.6663 28.5312L14.9887 30.3837C14.995 30.39 15.005 30.39 15.0113 30.3837L17.3337 28.5312L15.2038 20.4288ZM15 0.25C10.5163 0.25 6.875 3.89125 6.875 8.375C6.875 12.8587 10.5163 16.5 15 16.5C19.4837 16.5 23.125 12.8587 23.125 8.375C23.125 3.89125 19.4837 0.25 15 0.25ZM15 2.75C18.105 2.75 20.625 5.27 20.625 8.375C20.625 11.48 18.105 14 15 14C11.895 14 9.375 11.48 9.375 8.375C9.375 5.27 11.895 2.75 15 2.75Z"
+                            fill="white" />
+                        </svg>
+                      </div>
+                      <div class="chart-num">
+                        <p>Teachers</p>
+                        <h2 class="font-w700 mb-0">754</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-6">
+                    <div class="content-box">
+                      <div class="event-data icon-box icon-box-xl">
+                        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M24 2.75H21.5V1.5C21.5 1.16848 21.3683 0.850537 21.1339 0.616117C20.8995 0.381696 20.5815 0.25 20.25 0.25C19.9185 0.25 19.6005 0.381696 19.3661 0.616117C19.1317 0.850537 19 1.16848 19 1.5V2.75H15.25V1.5C15.25 1.16848 15.1183 0.850537 14.8839 0.616117C14.6495 0.381696 14.3315 0.25 14 0.25C13.6685 0.25 13.3505 0.381696 13.1161 0.616117C12.8817 0.850537 12.75 1.16848 12.75 1.5V2.75H9V1.5C9 1.16848 8.8683 0.850537 8.63388 0.616117C8.39946 0.381696 8.08152 0.25 7.75 0.25C7.41848 0.25 7.10054 0.381696 6.86612 0.616117C6.6317 0.850537 6.5 1.16848 6.5 1.5V2.75H4C3.00544 2.75 2.05161 3.14509 1.34835 3.84835C0.645088 4.55161 0.25 5.50544 0.25 6.5V24C0.25 24.9946 0.645088 25.9484 1.34835 26.6517C2.05161 27.3549 3.00544 27.75 4 27.75H24C24.9946 27.75 25.9484 27.3549 26.6517 26.6517C27.3549 25.9484 27.75 24.9946 27.75 24V6.5C27.75 5.50544 27.3549 4.55161 26.6517 3.84835C25.9484 3.14509 24.9946 2.75 24 2.75ZM2.75 6.5C2.75 6.16848 2.8817 5.85054 3.11612 5.61612C3.35054 5.3817 3.66848 5.25 4 5.25H6.5V6.5C6.5 6.83152 6.6317 7.14946 6.86612 7.38388C7.10054 7.6183 7.41848 7.75 7.75 7.75C8.08152 7.75 8.39946 7.6183 8.63388 7.38388C8.8683 7.14946 9 6.83152 9 6.5V5.25H12.75V6.5C12.75 6.83152 12.8817 7.14946 13.1161 7.38388C13.3505 7.6183 13.6685 7.75 14 7.75C14.3315 7.75 14.6495 7.6183 14.8839 7.38388C15.1183 7.14946 15.25 6.83152 15.25 6.5V5.25H19V6.5C19 6.83152 19.1317 7.14946 19.3661 7.38388C19.6005 7.6183 19.9185 7.75 20.25 7.75C20.5815 7.75 20.8995 7.6183 21.1339 7.38388C21.3683 7.14946 21.5 6.83152 21.5 6.5V5.25H24C24.3315 5.25 24.6495 5.3817 24.8839 5.61612C25.1183 5.85054 25.25 6.16848 25.25 6.5V10.25H2.75V6.5ZM25.25 24C25.25 24.3315 25.1183 24.6495 24.8839 24.8839C24.6495 25.1183 24.3315 25.25 24 25.25H4C3.66848 25.25 3.35054 25.1183 3.11612 24.8839C2.8817 24.6495 2.75 24.3315 2.75 24V12.75H25.25V24Z"
+                            fill="white" />
+                        </svg>
+                      </div>
+                      <div class="chart-num">
+                        <p>Events</p>
+                        <h2 class="font-w700 mb-0">40</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-6">
+                    <div class="content-box">
+                      <div class="food-data icon-box icon-box-xl bg-dark">
+                        <svg width="23" height="23" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M8.25448 0.509167C5.96882 1.64226 4.0464 3.39315 2.70524 5.56327C1.36408 7.7334 0.657848 10.2359 0.666646 12.787V18.7167C0.667705 19.5871 1.01397 20.4216 1.62948 21.0372C2.245 21.6527 3.07951 21.9989 3.94998 22H7.33331V32C7.33331 32.442 7.50891 32.866 7.82147 33.1785C8.13403 33.4911 8.55795 33.6667 8.99998 33.6667C9.44201 33.6667 9.86593 33.4911 10.1785 33.1785C10.4911 32.866 10.6666 32.442 10.6666 32V2C10.6664 1.71598 10.5936 1.43673 10.4552 1.18872C10.3168 0.940703 10.1173 0.732152 9.87574 0.582831C9.63414 0.43351 9.3584 0.348368 9.07467 0.335477C8.79095 0.322585 8.50863 0.382371 8.25448 0.509167ZM7.33331 18.6833L3.99998 18.7167V12.787C3.99498 11.3525 4.28878 9.93273 4.86268 8.61805C5.43658 7.30336 6.27798 6.12261 7.33331 5.151V18.6833ZM24 2V8.66667C23.9994 9.10852 23.8236 9.53211 23.5112 9.84455C23.1988 10.157 22.7752 10.3328 22.3333 10.3333V2C22.3333 1.55797 22.1577 1.13405 21.8452 0.821489C21.5326 0.508929 21.1087 0.333334 20.6666 0.333334C20.2246 0.333334 19.8007 0.508929 19.4881 0.821489C19.1756 1.13405 19 1.55797 19 2V10.3333C18.5581 10.3328 18.1345 10.157 17.8221 9.84455C17.5097 9.53211 17.3339 9.10852 17.3333 8.66667V2C17.3333 1.55797 17.1577 1.13405 16.8452 0.821489C16.5326 0.508929 16.1087 0.333334 15.6666 0.333334C15.2246 0.333334 14.8007 0.508929 14.4881 0.821489C14.1756 1.13405 14 1.55797 14 2V8.66667C14.0014 9.9923 14.5287 11.2632 15.4661 12.2006C16.4034 13.138 17.6743 13.6652 19 13.6667V32C19 32.442 19.1756 32.866 19.4881 33.1785C19.8007 33.4911 20.2246 33.6667 20.6666 33.6667C21.1087 33.6667 21.5326 33.4911 21.8452 33.1785C22.1577 32.866 22.3333 32.442 22.3333 32V13.6667C23.6589 13.6652 24.9299 13.138 25.8672 12.2006C26.8046 11.2632 27.3319 9.9923 27.3333 8.66667V2C27.3333 1.55797 27.1577 1.13405 26.8452 0.821489C26.5326 0.508929 26.1087 0.333334 25.6666 0.333334C25.2246 0.333334 24.8007 0.508929 24.4881 0.821489C24.1756 1.13405 24 1.55797 24 2Z"
+                            fill="white" />
+                        </svg>
+                      </div>
+                      <div class="chart-num">
+                        <p>Foods</p>
+                        <h2 class="font-w700 mb-0">32k</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="card crypto-chart">
+              <div class="card-header pb-0 border-0 flex-wrap">
+                <div class="mb-2 mb-sm-0">
+                  <div class="chart-title mb-3">
+                    <h2 class="heading">Sesi Berjalan</h2>
+                  </div>
+                </div>
+                <div class="p-static">
+                  <div class="d-flex align-items-center mb-3 mb-sm-0">
+                    <div class="round weekly" id="dzOldSeries">
+                      <div>
+                        <input type="checkbox" id="checkbox1" name="radio" value="weekly" />
+                        <label for="checkbox1" class="checkmark"></label>
+                      </div>
+                      <div>
+                        <span class="fs-14">This Week</span>
+                        <h4 class="fs-5 font-w700 mb-0">1.245</h4>
+                      </div>
+                    </div>
+                    <div class="round" id="dzNewSeries">
+                      <div>
+                        <input type="checkbox" id="checkbox" name="radio" value="monthly" />
+                        <label for="checkbox" class="checkmark"></label>
+                      </div>
+                      <div>
+                        <span class="fs-14">Last Week</span>
+                        <h4 class="fs-5 font-w700 mb-0">1.356</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body pt-2 custome-tooltip pb-0 px-2">
+                <div id="marketChart"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <div class="card h-auto">
+              <div class="card-header border-0 pb-0 flex-wrap">
+                <h4 class="heading mb-3 mb-sm-0">School Overview</h4>
+                <ul class="nav nav-pills mix-chart-tab" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-series="week" id="pills-week-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-week" type="button" role="tab" aria-selected="true">
+                      Week
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-series="month" id="pills-month-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-month" type="button" role="tab" aria-selected="false">
+                      Month
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-series="year" id="pills-year-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-year" type="button" role="tab" aria-selected="false">
+                      Year
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-series="all" id="pills-all-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-all" type="button" role="tab" aria-selected="false">
+                      All
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body p-0">
+                <div id="overiewChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- column-->
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header border-0 p-3">
+              <h4 class="heading mb-0">Unpaid Student Intuition</h4>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive basic-tbl">
+                <table id="example-1" class="display" style="min-width: 845px">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>ID</th>
+                      <th>Class</th>
+                      <th>Fees</th>
+                      <th>Rank</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="trans-list">
+                          <img src="images/trans/3.jpg" alt="" class="avatar avatar-sm me-3" />
+                          <h4>Jordan Nico</h4>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="text-primary font-w600">ID 123456789</span>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="icon-box icon-box-sm bg-secondary">
+                            <img src="images/profile.svg" alt="" />
+                          </div>
+                          <div class="ms-2">
+                            <span class="mb-0">Class</span>
+                            <h6 class="text-primary mb-0 font-w600">VII C</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="doller font-w600">$ 51,036</span>
+                      </td>
+                      <td>Second</td>
+                      <td>
+                        <ul class="tbl-action">
+                          <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_6_400)">
+                                <path
+                                  d="M23 19H18.93C18.6648 19 18.4104 18.8946 18.2229 18.7071C18.0354 18.5196 17.93 18.2652 17.93 18V15H6V18C6 18.2652 5.89464 18.5196 5.70711 18.7071C5.51957 18.8946 5.26522 19 5 19H1C0.734784 19 0.48043 18.8946 0.292893 18.7071C0.105357 18.5196 0 18.2652 0 18V8C0 7.20435 0.31607 6.44129 0.87868 5.87868C1.44129 5.31607 2.20435 5 3 5H21C21.7956 5 22.5587 5.31607 23.1213 5.87868C23.6839 6.44129 24 7.20435 24 8V18C24 18.2652 23.8946 18.5196 23.7071 18.7071C23.5196 18.8946 23.2652 19 23 19ZM19.93 17H22V8C22.0015 7.86827 21.9766 7.73757 21.9269 7.61558C21.8771 7.49359 21.8035 7.38276 21.7104 7.28961C21.6172 7.19646 21.5064 7.12285 21.3844 7.07312C21.2624 7.02339 21.1317 6.99853 21 7H3C2.86827 6.99853 2.73757 7.02339 2.61558 7.07312C2.49359 7.12285 2.38276 7.19646 2.28961 7.28961C2.19646 7.38276 2.12285 7.49359 2.07312 7.61558C2.02339 7.73757 1.99853 7.86827 2 8V17H4V14C4 13.7348 4.10536 13.4804 4.29289 13.2929C4.48043 13.1054 4.73478 13 5 13H18.93C19.1952 13 19.4496 13.1054 19.6371 13.2929C19.8246 13.4804 19.93 13.7348 19.93 14V17Z"
+                                  fill="#A098AE" />
+                                <path
+                                  d="M18.9331 7H5.00012C4.73491 7 4.48055 6.89464 4.29302 6.70711C4.10548 6.51957 4.00012 6.26522 4.00012 6V1C4.00012 0.734784 4.10548 0.48043 4.29302 0.292893C4.48055 0.105357 4.73491 0 5.00012 0L18.9331 0C19.1983 0 19.4527 0.105357 19.6402 0.292893C19.8278 0.48043 19.9331 0.734784 19.9331 1V6C19.9331 6.26522 19.8278 6.51957 19.6402 6.70711C19.4527 6.89464 19.1983 7 18.9331 7ZM6.00012 5H17.9331V2H6.00012V5ZM17.0331 24H6.90012C6.13099 24 5.39337 23.6945 4.84951 23.1506C4.30566 22.6068 4.00012 21.8691 4.00012 21.1V14C4.00012 13.7348 4.10548 13.4804 4.29302 13.2929C4.48055 13.1054 4.73491 13 5.00012 13H18.9301C19.1953 13 19.4497 13.1054 19.6372 13.2929C19.8248 13.4804 19.9301 13.7348 19.9301 14V21.1C19.9301 21.8686 19.625 22.6058 19.0818 23.1495C18.5386 23.6933 17.8017 23.9992 17.0331 24ZM6.00012 15V21.1C6.00012 21.3387 6.09494 21.5676 6.26373 21.7364C6.43251 21.9052 6.66143 22 6.90012 22H17.0331C17.2718 22 17.5007 21.9052 17.6695 21.7364C17.8383 21.5676 17.9331 21.3387 17.9331 21.1V15H6.00012ZM20.0001 10H19.0001C18.7349 10 18.4806 9.89464 18.293 9.70711C18.1055 9.51957 18.0001 9.26522 18.0001 9C18.0001 8.73478 18.1055 8.48043 18.293 8.29289C18.4806 8.10536 18.7349 8 19.0001 8H20.0001C20.2653 8 20.5197 8.10536 20.7072 8.29289C20.8948 8.48043 21.0001 8.73478 21.0001 9C21.0001 9.26522 20.8948 9.51957 20.7072 9.70711C20.5197 9.89464 20.2653 10 20.0001 10Z"
+                                  fill="#A098AE" />
+                                <path
+                                  d="M14.9999 18H8.99988C8.73466 18 8.48031 17.8946 8.29277 17.7071C8.10523 17.5196 7.99988 17.2652 7.99988 17C7.99988 16.7348 8.10523 16.4804 8.29277 16.2929C8.48031 16.1054 8.73466 16 8.99988 16H14.9999C15.2651 16 15.5194 16.1054 15.707 16.2929C15.8945 16.4804 15.9999 16.7348 15.9999 17C15.9999 17.2652 15.8945 17.5196 15.707 17.7071C15.5194 17.8946 15.2651 18 14.9999 18ZM11.9999 21H8.99988C8.73466 21 8.48031 20.8946 8.29277 20.7071C8.10523 20.5196 7.99988 20.2652 7.99988 20C7.99988 19.7348 8.10523 19.4804 8.29277 19.2929C8.48031 19.1054 8.73466 19 8.99988 19H11.9999C12.2651 19 12.5194 19.1054 12.707 19.2929C12.8945 19.4804 12.9999 19.7348 12.9999 20C12.9999 20.2652 12.8945 20.5196 12.707 20.7071C12.5194 20.8946 12.2651 21 11.9999 21Z"
+                                  fill="#A098AE" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_6_400">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            <div class="dropdown custom-dropdown">
+                              <div class="btn sharp tp-btn" data-bs-toggle="dropdown">
+                                <svg width="18" height="6" viewBox="0 0 24 6" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M12.0012 0.359985C11.6543 0.359985 11.3109 0.428302 10.9904 0.561035C10.67 0.693767 10.3788 0.888317 10.1335 1.13358C9.88829 1.37883 9.69374 1.67 9.56101 1.99044C9.42828 2.31089 9.35996 2.65434 9.35996 3.00119C9.35996 3.34803 9.42828 3.69148 9.56101 4.01193C9.69374 4.33237 9.88829 4.62354 10.1335 4.8688C10.3788 5.11405 10.67 5.3086 10.9904 5.44134C11.3109 5.57407 11.6543 5.64239 12.0012 5.64239C12.7017 5.64223 13.3734 5.36381 13.8686 4.86837C14.3638 4.37294 14.6419 3.70108 14.6418 3.00059C14.6416 2.3001 14.3632 1.62836 13.8677 1.13315C13.3723 0.637942 12.7004 0.359826 12 0.359985H12.0012ZM3.60116 0.359985C3.25431 0.359985 2.91086 0.428302 2.59042 0.561035C2.26997 0.693767 1.97881 0.888317 1.73355 1.13358C1.48829 1.37883 1.29374 1.67 1.16101 1.99044C1.02828 2.31089 0.959961 2.65434 0.959961 3.00119C0.959961 3.34803 1.02828 3.69148 1.16101 4.01193C1.29374 4.33237 1.48829 4.62354 1.73355 4.8688C1.97881 5.11405 2.26997 5.3086 2.59042 5.44134C2.91086 5.57407 3.25431 5.64239 3.60116 5.64239C4.30165 5.64223 4.97339 5.36381 5.4686 4.86837C5.9638 4.37294 6.24192 3.70108 6.24176 3.00059C6.2416 2.3001 5.96318 1.62836 5.46775 1.13315C4.97231 0.637942 4.30045 0.359826 3.59996 0.359985H3.60116ZM20.4012 0.359985C20.0543 0.359985 19.7109 0.428302 19.3904 0.561035C19.07 0.693767 18.7788 0.888317 18.5336 1.13358C18.2883 1.37883 18.0937 1.67 17.961 1.99044C17.8283 2.31089 17.76 2.65434 17.76 3.00119C17.76 3.34803 17.8283 3.69148 17.961 4.01193C18.0937 4.33237 18.2883 4.62354 18.5336 4.8688C18.7788 5.11405 19.07 5.3086 19.3904 5.44134C19.7109 5.57407 20.0543 5.64239 20.4012 5.64239C21.1017 5.64223 21.7734 5.36381 22.2686 4.86837C22.7638 4.37294 23.0419 3.70108 23.0418 3.00059C23.0416 2.3001 22.7632 1.62836 22.2677 1.13315C21.7723 0.637942 21.1005 0.359826 20.4 0.359985H20.4012Z"
+                                    fill="#A098AE" />
+                                </svg>
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="javascript:void(0);">Option 1</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Option 2</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Option 3</a>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="trans-list">
+                          <img src="images/trans/1.jpg" alt="" class="avatar avatar-sm me-3" />
+                          <h4>Samantha William</h4>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="text-primary font-w600">ID 123456789</span>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="icon-box icon-box-sm bg-secondary">
+                            <img src="images/profile.svg" alt="" />
+                          </div>
+                          <div class="ms-2">
+                            <span class="mb-0">Class</span>
+                            <h6 class="text-primary mb-0 font-w600">VII C</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="doller font-w600">$ 51,036</span>
+                      </td>
+                      <td>First</td>
+                      <td>
+                        <ul class="tbl-action">
+                          <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <g clip-path="url(#clip0_6_400)">
+                                <path
+                                  d="M23 19H18.93C18.6648 19 18.4104 18.8946 18.2229 18.7071C18.0354 18.5196 17.93 18.2652 17.93 18V15H6V18C6 18.2652 5.89464 18.5196 5.70711 18.7071C5.51957 18.8946 5.26522 19 5 19H1C0.734784 19 0.48043 18.8946 0.292893 18.7071C0.105357 18.5196 0 18.2652 0 18V8C0 7.20435 0.31607 6.44129 0.87868 5.87868C1.44129 5.31607 2.20435 5 3 5H21C21.7956 5 22.5587 5.31607 23.1213 5.87868C23.6839 6.44129 24 7.20435 24 8V18C24 18.2652 23.8946 18.5196 23.7071 18.7071C23.5196 18.8946 23.2652 19 23 19ZM19.93 17H22V8C22.0015 7.86827 21.9766 7.73757 21.9269 7.61558C21.8771 7.49359 21.8035 7.38276 21.7104 7.28961C21.6172 7.19646 21.5064 7.12285 21.3844 7.07312C21.2624 7.02339 21.1317 6.99853 21 7H3C2.86827 6.99853 2.73757 7.02339 2.61558 7.07312C2.49359 7.12285 2.38276 7.19646 2.28961 7.28961C2.19646 7.38276 2.12285 7.49359 2.07312 7.61558C2.02339 7.73757 1.99853 7.86827 2 8V17H4V14C4 13.7348 4.10536 13.4804 4.29289 13.2929C4.48043 13.1054 4.73478 13 5 13H18.93C19.1952 13 19.4496 13.1054 19.6371 13.2929C19.8246 13.4804 19.93 13.7348 19.93 14V17Z"
+                                  fill="#A098AE" />
+                                <path
+                                  d="M18.9331 7H5.00012C4.73491 7 4.48055 6.89464 4.29302 6.70711C4.10548 6.51957 4.00012 6.26522 4.00012 6V1C4.00012 0.734784 4.10548 0.48043 4.29302 0.292893C4.48055 0.105357 4.73491 0 5.00012 0L18.9331 0C19.1983 0 19.4527 0.105357 19.6402 0.292893C19.8278 0.48043 19.9331 0.734784 19.9331 1V6C19.9331 6.26522 19.8278 6.51957 19.6402 6.70711C19.4527 6.89464 19.1983 7 18.9331 7ZM6.00012 5H17.9331V2H6.00012V5ZM17.0331 24H6.90012C6.13099 24 5.39337 23.6945 4.84951 23.1506C4.30566 22.6068 4.00012 21.8691 4.00012 21.1V14C4.00012 13.7348 4.10548 13.4804 4.29302 13.2929C4.48055 13.1054 4.73491 13 5.00012 13H18.9301C19.1953 13 19.4497 13.1054 19.6372 13.2929C19.8248 13.4804 19.9301 13.7348 19.9301 14V21.1C19.9301 21.8686 19.625 22.6058 19.0818 23.1495C18.5386 23.6933 17.8017 23.9992 17.0331 24ZM6.00012 15V21.1C6.00012 21.3387 6.09494 21.5676 6.26373 21.7364C6.43251 21.9052 6.66143 22 6.90012 22H17.0331C17.2718 22 17.5007 21.9052 17.6695 21.7364C17.8383 21.5676 17.9331 21.3387 17.9331 21.1V15H6.00012ZM20.0001 10H19.0001C18.7349 10 18.4806 9.89464 18.293 9.70711C18.1055 9.51957 18.0001 9.26522 18.0001 9C18.0001 8.73478 18.1055 8.48043 18.293 8.29289C18.4806 8.10536 18.7349 8 19.0001 8H20.0001C20.2653 8 20.5197 8.10536 20.7072 8.29289C20.8948 8.48043 21.0001 8.73478 21.0001 9C21.0001 9.26522 20.8948 9.51957 20.7072 9.70711C20.5197 9.89464 20.2653 10 20.0001 10Z"
+                                  fill="#A098AE" />
+                                <path
+                                  d="M14.9999 18H8.99988C8.73466 18 8.48031 17.8946 8.29277 17.7071C8.10523 17.5196 7.99988 17.2652 7.99988 17C7.99988 16.7348 8.10523 16.4804 8.29277 16.2929C8.48031 16.1054 8.73466 16 8.99988 16H14.9999C15.2651 16 15.5194 16.1054 15.707 16.2929C15.8945 16.4804 15.9999 16.7348 15.9999 17C15.9999 17.2652 15.8945 17.5196 15.707 17.7071C15.5194 17.8946 15.2651 18 14.9999 18ZM11.9999 21H8.99988C8.73466 21 8.48031 20.8946 8.29277 20.7071C8.10523 20.5196 7.99988 20.2652 7.99988 20C7.99988 19.7348 8.10523 19.4804 8.29277 19.2929C8.48031 19.1054 8.73466 19 8.99988 19H11.9999C12.2651 19 12.5194 19.1054 12.707 19.2929C12.8945 19.4804 12.9999 19.7348 12.9999 20C12.9999 20.2652 12.8945 20.5196 12.707 20.7071C12.5194 20.8946 12.2651 21 11.9999 21Z"
+                                  fill="#A098AE" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_6_400">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            <div class="dropdown custom-dropdown">
+                              <div class="btn sharp tp-btn" data-bs-toggle="dropdown">
+                                <svg width="18" height="6" viewBox="0 0 24 6" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M12.0012 0.359985C11.6543 0.359985 11.3109 0.428302 10.9904 0.561035C10.67 0.693767 10.3788 0.888317 10.1335 1.13358C9.88829 1.37883 9.69374 1.67 9.56101 1.99044C9.42828 2.31089 9.35996 2.65434 9.35996 3.00119C9.35996 3.34803 9.42828 3.69148 9.56101 4.01193C9.69374 4.33237 9.88829 4.62354 10.1335 4.8688C10.3788 5.11405 10.67 5.3086 10.9904 5.44134C11.3109 5.57407 11.6543 5.64239 12.0012 5.64239C12.7017 5.64223 13.3734 5.36381 13.8686 4.86837C14.3638 4.37294 14.6419 3.70108 14.6418 3.00059C14.6416 2.3001 14.3632 1.62836 13.8677 1.13315C13.3723 0.637942 12.7004 0.359826 12 0.359985H12.0012ZM3.60116 0.359985C3.25431 0.359985 2.91086 0.428302 2.59042 0.561035C2.26997 0.693767 1.97881 0.888317 1.73355 1.13358C1.48829 1.37883 1.29374 1.67 1.16101 1.99044C1.02828 2.31089 0.959961 2.65434 0.959961 3.00119C0.959961 3.34803 1.02828 3.69148 1.16101 4.01193C1.29374 4.33237 1.48829 4.62354 1.73355 4.8688C1.97881 5.11405 2.26997 5.3086 2.59042 5.44134C2.91086 5.57407 3.25431 5.64239 3.60116 5.64239C4.30165 5.64223 4.97339 5.36381 5.4686 4.86837C5.9638 4.37294 6.24192 3.70108 6.24176 3.00059C6.2416 2.3001 5.96318 1.62836 5.46775 1.13315C4.97231 0.637942 4.30045 0.359826 3.59996 0.359985H3.60116ZM20.4012 0.359985C20.0543 0.359985 19.7109 0.428302 19.3904 0.561035C19.07 0.693767 18.7788 0.888317 18.5336 1.13358C18.2883 1.37883 18.0937 1.67 17.961 1.99044C17.8283 2.31089 17.76 2.65434 17.76 3.00119C17.76 3.34803 17.8283 3.69148 17.961 4.01193C18.0937 4.33237 18.2883 4.62354 18.5336 4.8688C18.7788 5.11405 19.07 5.3086 19.3904 5.44134C19.7109 5.57407 20.0543 5.64239 20.4012 5.64239C21.1017 5.64223 21.7734 5.36381 22.2686 4.86837C22.7638 4.37294 23.0419 3.70108 23.0418 3.00059C23.0416 2.3001 22.7632 1.62836 22.2677 1.13315C21.7723 0.637942 21.1005 0.359826 20.4 0.359985H20.4012Z"
+                                    fill="#A098AE" />
+                                </svg>
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="javascript:void(0);">Option 1</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Option 2</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Option 3</a>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container Ends-->
+
+    <!--****** Footer start *******-->
+    <div class="footer footer-outer">
+      <div class="copyright">
+        <p>
+          Powered&amp; by
+          <a href="https://dexignlab.com/" target="_blank">Educated</a>
+          <span class="current-year">2024</span>
+        </p>
+      </div>
+    </div>
+
+    <!--***** Footer end ********-->
+  </div>
+  <!--**** Scripts ***********-->
+  <script src="{{asset('eduline/vendor/global/global.min.js')}}"></script>
+  <script src="{{asset('eduline/vendor/chart.js/Chart.bundle.min.js')}}"></script>
+  <script src="{{ asset('eduline/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+  <!-- Plugins JS start-->
+  <!-- Apex Chart -->
+  <script src="{{ asset('eduline/vendor/apexchart/apexchart.js') }}"></script>
+
+  <!-- Chart piety plugin files -->
+  <script src="{{ asset('eduline/vendor/peity/jquery.peity.min.js') }}"></script>
+  <script src="{{ asset('eduline/vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
+
+  <!-- Swiper slider -->
+  <script src="{{ asset('eduline/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
+
+  <!-- Datatable -->
+  <script src="{{ asset('eduline/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('eduline/js/plugins-init/datatables.init.js') }}"></script>
+
+  <!-- Dashboard 1 -->
+  <script src="{{ asset('eduline/js/dashboard/dashboard-1.js') }}"></script>
+
+  <script src="{{ asset('eduline/vendor/wow-master/dist/wow.min.js') }}"></script>
+  <script src="{{ asset('eduline/vendor/bootstrap-datetimepicker/js/moment.js') }}"></script>
+  <script src="{{ asset('eduline/vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ asset('eduline/vendor/bootstrap-select-country/js/bootstrap-select-country.min.js') }}"></script>
+
+  <script src="{{asset('eduline/js/dlabnav-init.js')}}"></script>
+  <script src="{{asset('eduline/js/custom.min.js')}}"></script>
+  <script src="{{asset('eduline/js/demo.js')}}"></script>
+  <!-- Plugins JS Ends-->
+  <script src="{{ asset('eduline/js/styleSwitcher.js') }}"></script>
 </body>
-<script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
-<script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5') }}" async></script>
-<script>
-    const userMenuButton = document.getElementById('user-menu-button');
-    const userDropdown = document.getElementById('user-dropdown');
-    userMenuButton.addEventListener('click', function (event) {
-        event.stopPropagation();
-        userDropdown.classList.toggle('hidden');
-    });
-    document.addEventListener('click', function (event) {
-        if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
-            userDropdown.classList.add('hidden');
-        }
-    });
-</script>
+</html>

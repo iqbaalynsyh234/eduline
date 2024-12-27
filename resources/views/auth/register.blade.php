@@ -1,61 +1,88 @@
-@extends('layouts.master')
+@extends('layouts.register.app')
 @section('content')
-<section class="min-h-screen mb-32">
-  <div class="relative flex items-start pt-12 pb-56 m-4 overflow-hidden bg-center bg-cover min-h-50-screen rounded-xl" style="background-image: url('../assets/img/curved-images/curved14.jpg')">
-    <div class="container z-10">
-      <div class="flex flex-wrap justify-center -mx-3">
-        <div class="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
-          <h1 class="mt-12 mb-2 text-white">Welcome!</h1>
-          <p class="text-white">Please register your account to log in to the ebook</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="authincation d-flex flex-column flex-lg-row flex-column-fluid">
+    <div class="container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+        <div class="d-flex justify-content-center h-100 align-items-center">
+            <div class="authincation-content style-2">
+                <div class="row no-gutters">
+                    <div class="col-xl-12 tab-content">
+                        <div id="sign-up" class="auth-form tab-pane fade show active form-validation">
+                            <form action="{{ route('register') }}" method="POST">
+                                @csrf
+                                <div class="text-center mb-4">
+										<h3 class="text-center mb-2 text-black">Sign up</h3>
+										<span>Your Social Campaigns</span>
+									</div>
+									<div class="row mb-4">
+										<div class="col-xl-6 col-6">
+											<a href="https://www.google.com/" class="btn btn-outline-light d-block social-bx">
+											<svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M27.9851 14.2618C27.9851 13.1146 27.8899 12.2775 27.6837 11.4094H14.2788V16.5871H22.1472C21.9886 17.8738 21.132 19.8116 19.2283 21.1137L19.2016 21.287L23.44 24.4956L23.7336 24.5242C26.4304 22.0904 27.9851 18.5093 27.9851 14.2618Z" fill="#4285F4"/>
+											<path d="M14.279 27.904C18.1338 27.904 21.37 26.6637 23.7338 24.5245L19.2285 21.114C18.0228 21.9356 16.4047 22.5092 14.279 22.5092C10.5034 22.5092 7.29894 20.0754 6.15663 16.7114L5.9892 16.7253L1.58205 20.0583L1.52441 20.2149C3.87224 24.7725 8.69486 27.904 14.279 27.904Z" fill="#34A853"/>
+											<path d="M6.15656 16.7113C5.85516 15.8432 5.68072 14.913 5.68072 13.9519C5.68072 12.9907 5.85516 12.0606 6.14071 11.1925L6.13272 11.0076L1.67035 7.62109L1.52435 7.68896C0.556704 9.58024 0.00146484 11.7041 0.00146484 13.9519C0.00146484 16.1997 0.556704 18.3234 1.52435 20.2147L6.15656 16.7113Z" fill="#FBBC05"/>
+											<path d="M14.279 5.3947C16.9599 5.3947 18.7683 6.52635 19.7995 7.47204L23.8289 3.6275C21.3542 1.37969 18.1338 0 14.279 0C8.69485 0 3.87223 3.1314 1.52441 7.68899L6.14077 11.1925C7.29893 7.82856 10.5034 5.3947 14.279 5.3947Z" fill="#EB4335"/>
+											</svg>
 
-  <div class="container">
-    <div class="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
-      <div class="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
-        <div class="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-          <div class="p-6 mb-0 text-center bg-white border-b-0 rounded-t-2xl">
-            <h5>Register Account</h5>
-          </div>
-          <div class="flex-auto p-6">
-            <form action="{{ route('register') }}" method="POST" role="form text-left">
-              @csrf
-              <div class="mb-4">
-                <input type="text" name="name" class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Name" aria-label="Name" value="{{ old('name') }}" required />
-                @error('name')
-                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="mb-4">
-                <input type="email" name="email" class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Email" aria-label="Email" value="{{ old('email') }}" required />
-                @error('email')
-                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="mb-4">
-                <input type="password" name="password" class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Password" aria-label="Password" required />
-                @error('password')
-                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="mb-4">
-                <input type="password" name="password_confirmation" class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Confirm Password" aria-label="Confirm Password" required />
-              </div>
-              <div class="min-h-6 pl-6.92 mb-0.5 block">
-                <input id="terms" class="w-4.92 h-4.92 ease-soft -ml-6.92 rounded-1.4 checked:bg-gradient-to-tl checked:from-gray-900 checked:to-slate-800 after:text-xxs after:font-awesome after:duration-250 after:ease-soft-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 bg-white bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100" type="checkbox" value="" checked />
-                <label class="mb-2 ml-1 font-normal cursor-pointer select-none text-sm text-slate-700" for="terms"> I agree the <a href="javascript:;" class="font-bold text-slate-700">Terms and Conditions</a> </label>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Sign up</button>
-              </div>
-              <p class="mt-4 mb-0 leading-normal text-sm">Already have an account? <a href="{{ route('login') }}" class="font-bold text-slate-700">Sign in</a></p>
-            </form>
-          </div>
+											<span class="ms-1 font-w600 label-color">Sign in with Google</span></a>
+										</div>
+										<div class="col-xl-6 col-6">
+											<a href="https://www.apple.com/" class="btn btn-outline-light d-block social-bx">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 456.008 560.035"><path d="M380.844 297.529c.787 84.752 74.349 112.955 75.164 113.314-.622 1.988-11.754 40.191-38.756 79.652-23.343 34.117-47.568 68.107-85.731 68.811-37.499.691-49.557-22.236-92.429-22.236-42.859 0-56.256 21.533-91.753 22.928-36.837 1.395-64.889-36.891-88.424-70.883-48.093-69.53-84.846-196.475-35.496-282.165 24.516-42.554 68.328-69.501 115.882-70.192 36.173-.69 70.315 24.336 92.429 24.336 22.1 0 63.59-30.096 107.208-25.676 18.26.76 69.517 7.376 102.429 55.552-2.652 1.644-61.159 35.704-60.523 106.559M310.369 89.418C329.926 65.745 343.089 32.79 339.498 0 311.308 1.133 277.22 18.785 257 42.445c-18.121 20.952-33.991 54.487-29.709 86.628 31.421 2.431 63.52-15.967 83.078-39.655"/></svg>
+											<span class="ms-1 font-w600 label-color">Sign in with Apple</span></a>
+										</div>
+									</div>
+									<div class="sepertor">
+										<span class="d-block mb-4 fs-13">Or with email</span>
+									</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="full_name" class="form-label mb-2 fs-13 label-color font-w500">Full Name</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter your full name" value="{{ old('full_name') }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phone_number" class="form-label mb-2 fs-13 label-color font-w500">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" value="{{ old('phone_number') }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label mb-2 fs-13 label-color font-w500">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label mb-2 fs-13 label-color font-w500">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label mb-2 fs-13 label-color font-w500">Confirm Password</label>
+                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-block btn-primary">Register Account</button>
+                            </form>
+                            <div class="new-account mt-3 text-center">
+                                <p class="font-w500">Already have an account? <a class="text-primary" href="{{ route('login') }}">Sign in</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
+</div>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+@endpush
 @endsection

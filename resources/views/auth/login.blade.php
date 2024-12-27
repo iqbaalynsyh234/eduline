@@ -1,94 +1,62 @@
 @extends('layouts.master')
-
-@section('title', 'Sign In - Software Ebook Siswa') 
-
+@section('title', 'Sign In')
 @section('content')
-    <section>
-        <div class="relative flex items-center p-0 overflow-hidden bg-center bg-cover min-h-75-screen">
-            <div class="container z-10">
-                <div class="flex flex-wrap mt-0 -mx-3">
-                    <div class="flex flex-col w-full max-w-full px-3 mx-auto md:flex-0 shrink-0 md:w-6/12 lg:w-5/12 xl:w-4/12">
-                        <div class="relative flex flex-col min-w-0 mt-32 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
-                            <div class="p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl">
-                                <h3 class="relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Ebook - PT Kreasi Bintang Edukasi</h3>
-                                <p class="mb-0">Enter your email and password to sign in</p>
-                            </div>
-                            <div class="flex-auto p-6">
-                                <form method="POST" action="{{ route('login') }}" role="form">
-                                    @csrf
-                                    <!-- Email Field -->
-                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Email</label>
-                                    <div class="mb-4">
-                                        <input 
-                                            type="email" 
-                                            name="email" 
-                                            value="{{ old('email') }}" 
-                                            class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" 
-                                            placeholder="Email" 
-                                            aria-label="Email" 
-                                            aria-describedby="email-addon" 
-                                        />
-                                        @error('email')
-                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <!-- Password Field -->
-                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">Password</label>
-                                    <div class="mb-4">
-                                        <input 
-                                            type="password" 
-                                            name="password" 
-                                            class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow" 
-                                            placeholder="Password" 
-                                            aria-label="Password" 
-                                            aria-describedby="password-addon" 
-                                        />
-                                        @error('password')
-                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <!-- Remember Me Checkbox -->
-                                    <div class="min-h-6 mb-0.5 block pl-12">
-                                        <input 
-                                            id="rememberMe" 
-                                            name="remember" 
-                                            type="checkbox" 
-                                            class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left -ml-12 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right" 
-                                            {{ old('remember') ? 'checked' : '' }} 
-                                        />
-                                        <label class="mb-2 ml-1 font-normal cursor-pointer select-none text-sm text-slate-700" for="rememberMe">Remember me</label>
-                                    </div>
-                                    <!-- Submit Button -->
-                                    <div class="text-center">
-                                        <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-0 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer shadow-soft-md bg-x-25 bg-150 leading-pro text-xs ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-cyan-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85">Sign in</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
-                                <p class="mx-auto mb-6 leading-normal text-sm">
-                                    Don't have an account?
-                                    <a href="{{ route('register') }}" class="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text">Sign up</a>
-                                </p>
-                            </div>
+<div class="d-flex justify-content-center h-100 align-items-center">
+    <div class="authincation-content style-2">
+        <div class="row no-gutters">
+            <div class="col-xl-12 tab-content">
+                <div id="sign-up" class="auth-form tab-pane fade show active form-validation">
+                    <form action="{{ route('login') }}" method="post">
+                        @csrf
+                        <div class="text-center mb-4">
+                            <h3 class="text-center mb-2 text-black">Sign In</h3>
+                            <span>login with social account</span>
                         </div>
-                    </div>
-                    <div class="w-full max-w-full px-3 lg:flex-0 shrink-0 md:w-6/12">
-                        <div class="absolute top-0 hidden w-3/5 h-full -mr-32 overflow-hidden -skew-x-10 -right-40 rounded-bl-xl md:block">
-                            <div class="absolute inset-x-0 top-0 z-0 h-full -ml-16 bg-cover skew-x-10" style="background-image: url('../assets/img/curved-images/curved6.jpg')"></div>
+                        <div class="text-center mb-4">
+                            <a href="https://www.google.com/" class="btn btn-outline-light d-inline-flex align-items-center">
+                                <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M27.9851 14.2618C27.9851 13.1146 27.8899 12.2775 27.6837 11.4094H14.2788V16.5871H22.1472C21.9886 17.8738 21.132 19.8116 19.2283 21.1137L19.2016 21.287L23.44 24.4956L23.7336 24.5242C26.4304 22.0904 27.9851 18.5093 27.9851 14.2618Z" fill="#4285F4" />
+                                    <path d="M14.279 27.904C18.1338 27.904 21.37 26.6637 23.7338 24.5245L19.2285 21.114C18.0228 21.9356 16.4047 22.5092 14.279 22.5092C10.5034 22.5092 7.29894 20.0754 6.15663 16.7114L5.9892 16.7253L1.58205 20.0583L1.52441 20.2149C3.87224 24.7725 8.69486 27.904 14.279 27.904Z" fill="#34A853" />
+                                    <path d="M6.15656 16.7113C5.85516 15.8432 5.68072 14.913 5.68072 13.9519C5.68072 12.9907 5.85516 12.0606 6.14071 11.1925L6.13272 11.0076L1.67035 7.62109L1.52435 7.68896C0.556704 9.58024 0.00146484 11.7041 0.00146484 13.9519C0.00146484 16.1997 0.556704 18.3234 1.52435 20.2147L6.15656 16.7113Z" fill="#FBBC05" />
+                                    <path d="M14.279 5.3947C16.9599 5.3947 18.7683 6.52635 19.7995 7.47204L23.8289 3.6275C21.3542 1.37969 18.1338 0 14.279 0C8.69485 0 3.87223 3.1314 1.52441 7.68899L6.14077 11.1925C7.29893 7.82856 10.5034 5.3947 14.279 5.3947Z" fill="#EB4335" />
+                                </svg>
+                                <span class="ms-2 font-w600 label-color">Sign in with Google</span>
+                            </a>
                         </div>
+                        <div class="sepertor">
+                            <span class="d-block mb-4 fs-13">Or with email</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label mb-2 fs-13 label-color font-w500">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="hello@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label mb-2 fs-13 label-color font-w500">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required>
+                        </div>
+                        <a href="{{ route('password.request') }}" class="text-primary float-end mb-4">Forgot
+                            Password?</a>
+                        <button class="btn btn-block btn-primary">Sign In</button>
+                    </form>
+                    <div class="new-account mt-3 text-center">
+                        <p class="font-w500">Don't have an account? <a class="text-primary"
+                                href="{{ route('register') }}">Sign Up</a></p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    @if(session('status'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Login Successful',
-                text: 'Welcome back, {{ Auth::user()->name }}!',
-            });
-        </script>
-    @endif
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('sweetalert'))
+<script>
+    Swal.fire({
+        icon: "{{ session('sweetalert.type') }}", 
+        title: "{{ session('sweetalert.title') }}", 
+        text: "{{ session('sweetalert.text') }}", 
+    });
+</script>
+@endif
 @endsection
