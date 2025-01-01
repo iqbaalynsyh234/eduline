@@ -4,7 +4,7 @@
 <div class="container-fluid py-4">
     <h4 class="mb-4"><span>✨</span> My Target</h4>
     <div class="row">
-        @foreach ($targets as $target)
+        @forelse ($targets as $target)
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -17,19 +17,23 @@
                         <p class="text-muted mb-2">{{ $target->description }}</p>
                         <p class="text-muted small mb-0">
                             <i class="material-symbols-outlined">
-                              {{ $target->schedule }}
+                                {{ $target->schedule }}
                             </i>
                         </p>
                         <p class="text-muted small">
                             <i class="material-symbols-outlined">
-                                 {{ $target->time }}
+                                {{ $target->time }}
                             </i>
                         </p>
                         <a href="{{ route('student.targets.details', $target->slug) }}" class="text-primary">View →</a>
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="col-12 text-center">
+                <p class="text-muted">No targets found.</p>
+            </div>
+        @endforelse
     </div>
 </div>
 @endsection

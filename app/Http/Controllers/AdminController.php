@@ -7,9 +7,11 @@ use App\Models\Program;
 use App\Models\SubProgram;
 use App\Models\Schedule;
 use App\Models\Kbm;
+use App\Models\CoachingSchedule;
 use App\Models\Assessment;
 use App\Models\Coaching;
 use App\Models\User;
+use App\Models\PrivateSchedule;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -174,20 +176,27 @@ class AdminController extends Controller
 
         return response()->json(['success' => 'Sub Program deleted successfully.']);
     }
-
-    // function Myschdule
-    public function indexSchedule()
+    
+    public function indexSchedule(Request $request)
     {
         $assessments = Assessment::with('student')->get();
         $kbms = Kbm::with(['student', 'teacher'])->get();
         $coachings = Coaching::with('student')->get();
-        $students = User::role('student')->get();
+        $coachings = Coaching::with(['student', 'teacher'])->get();
+        $students = User::role('student')->paginate(3);
         $teachers = User::role('teacher')->get();
-        $programs = Program::all(); 
+        $programs = Program::all();
+        $coachings = CoachingSchedule::with(['student', 'teacher'])->get();
+        $studentId = $request->get('student_id'); 
+        $kbmPrivateSchedules = PrivateSchedule::with('student', 'teacher')
+            ->when($studentId, function ($query) use ($studentId) {
+                return $query->where('student_id', $studentId);
+            })
+        ->get();
     
-        return view('admin.schedule.index', compact('assessments', 'kbms', 'coachings', 'students', 'teachers', 'programs'));
+        return view('admin.schedule.index', compact('assessments', 'kbms', 'coachings', 'students', 'teachers', 'programs', 'kbmPrivateSchedules'));
     }
-      
+    
     function storeSchedule(Request $request)
     {
         $request->validate([

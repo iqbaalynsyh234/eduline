@@ -346,6 +346,57 @@ let dataSet = [
         },
     });
 
+    var table = $("#example-coaching").DataTable({
+        createdRow: function (row, data, index) {
+            $(row).addClass("selected");
+        },
+
+        searching: false,
+        pageLength: 19,
+        select: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                next: '<i class="fa-solid fa-angle-right"></i>',
+                previous: '<i class="fa-solid fa-angle-left"></i>',
+            },
+        },
+    });
+
+    var table = $("#example-kbm-private").DataTable({
+        createdRow: function (row, data, index) {
+            $(row).addClass("selected");
+        },
+
+        searching: false,
+        pageLength: 19,
+        select: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                next: '<i class="fa-solid fa-angle-right"></i>',
+                previous: '<i class="fa-solid fa-angle-left"></i>',
+            },
+        },
+    });
+
+    var table = $("#example-kbm-private-student").DataTable({
+        createdRow: function (row, data, index) {
+            $(row).addClass("selected");
+        },
+
+        searching: false,
+        pageLength: 19,
+        select: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                next: '<i class="fa-solid fa-angle-right"></i>',
+                previous: '<i class="fa-solid fa-angle-left"></i>',
+            },
+        },
+    });
+
     const kbmData = [
         {
             no: 1,

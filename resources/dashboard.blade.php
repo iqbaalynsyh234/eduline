@@ -119,7 +119,7 @@
     <div class="col-xl-6">
       <div class="card h-auto">
         <div class="card-header border-0 pb-0 flex-wrap">
-          <h4 class="heading mb-3 mb-sm-0">Sesi Habis</h4>
+          <h4 class="heading mb-3 mb-sm-0">School Overview</h4>
           <ul class="nav nav-pills mix-chart-tab" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" data-series="week" id="pills-week-tab" data-bs-toggle="pill"
@@ -157,7 +157,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-header border-0 p-3">
-        <h4 class="heading mb-0">Jadwal KBM</h4>
+        <h4 class="heading mb-0">Unpaid Student Intuition</h4>
       </div>
       <div class="card-body p-0">
         <div class="table-responsive basic-tbl">

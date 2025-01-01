@@ -5,7 +5,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\KBMController;
+use App\Http\Controllers\OauthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MataPelajaranController;
+use App\Http\Controllers\CoachingController;
+use App\Http\Controllers\TargetController;
+use App\Http\Controllers\EduCenterController;
+use App\Http\Controllers\PrivateScheduleController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\TeacherController;
@@ -14,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
+
+// Google OAuth Routes
+Route::get('oauth/google', [OauthController::class, 'redirectToProvider'])->name('oauth.google');
+Route::get('oauth/google/callback', [OauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');
 
 // Routes that require user to be authenticated
 Route::middleware(['auth', 'check.status'])->group(function () {
@@ -56,9 +66,10 @@ Route::middleware(['auth', 'check.status'])->group(function () {
 
     // Admin Routes
     Route::prefix('admin')->name('admin.')->middleware('role:owner')->group(function () {
+
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     
-       // Master Data Routes
+        // Master Data Routes
         Route::prefix('master-data')->name('master-data.')->group(function () {
 
             // Brand Routes
@@ -90,6 +101,15 @@ Route::middleware(['auth', 'check.status'])->group(function () {
             Route::put('sla/{sla}', [AdminController::class, 'updateSLA'])->name('sla.update');
             Route::delete('sla/{sla}', [AdminController::class, 'destroySLA'])->name('sla.destroy');
 
+            // Target Management Routes
+            Route::get('target', [TargetController::class, 'indexTarget'])->name('target.index');
+            Route::get('target/create', [TargetController::class, 'createTarget'])->name('target.create');
+            Route::post('target', [TargetController::class, 'storeTarget'])->name('target.store');
+            Route::get('target/{target}/edit', [TargetController::class, 'editTarget'])->name('target.edit');
+            Route::put('target/{target}', [TargetController::class, 'updateTarget'])->name('target.update');
+            Route::delete('target/{target}', [TargetController::class, 'destroyTarget'])->name('target.destroy');
+
+
             // User Management Routes
             Route::get('user', [UserController::class, 'index'])->name('user.index');
             Route::post('user', [UserController::class, 'store'])->name('user.store');
@@ -100,11 +120,39 @@ Route::middleware(['auth', 'check.status'])->group(function () {
             Route::get('teacher', [AdminController::class, 'indexTeacher'])->name('teacher.index');
             Route::get('student', [AdminController::class, 'indexStudent'])->name('student.index');
             Route::get('class', [AdminController::class, 'indexClass'])->name('class.index');
-            Route::get('subject', [AdminController::class, 'indexSubject'])->name('subject.index');
             Route::get('material', [AdminController::class, 'indexMaterial'])->name('material.index');
             Route::get('academic-year', [AdminController::class, 'indexAcademicYear'])->name('academic-year.index');
             Route::get('student-program', [AdminController::class, 'indexStudentProgram'])->name('student-program.index');
         });
+
+        // mata pelajaran routes
+        Route::prefix('matapelajaran')->name('subject.')->group(function () {
+            Route::get('/', [MataPelajaranController::class, 'index'])->name('index'); 
+            Route::get('/create', [MataPelajaranController::class, 'create'])->name('create'); 
+            Route::post('/', [MataPelajaranController::class, 'store'])->name('store'); 
+            Route::get('/{subject}/edit', [MataPelajaranController::class, 'edit'])->name('edit'); 
+            Route::put('/{subject}', [MataPelajaranController::class, 'update'])->name('update'); 
+            Route::delete('/{subject}', [MataPelajaranController::class, 'destroy'])->name('destroy'); 
+        });
+
+        // educenter module 
+        Route::prefix('educenter')->name('educenter.')->group(function () {
+            Route::get('/select-brand', [EduCenterController::class, 'selectBrand'])->name('select_brand');
+            Route::get('/select-subprogram/{eModuleId}', [EduCenterController::class, 'selectSubprogram'])->name('educenter.select_subprogram');
+            Route::post('/save-selected-brand', [EduCenterController::class, 'saveSelectedBrand'])->name('save_selected_brand');
+            Route::get('/', [EduCenterController::class, 'index'])->name('index');
+            Route::post('/save-selected-subprogram', [EduCenterController::class, 'saveSelectedSubprogram'])
+            ->name('educenter.save_selected_program');
+            Route::get('/select-program', [EduCenterController::class, 'selectProgram'])->name('select_program');
+            Route::get('/e-module', [EduCenterController::class, 'eModule'])->name('e_module');
+            Route::get('/paket-soal', [EduCenterController::class, 'paketSoal'])->name('paket_soal');
+            Route::get('/assign-paket-soal', [EduCenterController::class, 'assignPaketSoal'])->name('assign_paket_soal'); 
+        });
+
+        // Coaching Schedule Routes
+        Route::post('/coaching/store', [CoachingController::class, 'store'])->name('coaching.store');
+        Route::put('/coaching/update/{id}', [CoachingController::class, 'update'])->name('coaching.update');
+        Route::delete('/coaching/delete/{id}', [CoachingController::class, 'destroy'])->name('coaching.delete');
 
         // My Schedule Routes
         Route::get('/schedule', [AdminController::class, 'indexSchedule'])->name('schedule.index');
@@ -115,10 +163,19 @@ Route::middleware(['auth', 'check.status'])->group(function () {
         // route KBM 
         Route::prefix('kbm')->name('kbm.')->group(function () {
             Route::get('schedule/{studentId}/data', [KBMController::class, 'getStudentSchedule'])->name('schedule.data');
+            Route::get('schedule/{id}/edit', [KBMController::class, 'editSchedule'])->name('schedule.edit'); 
             Route::post('schedule', [KBMController::class, 'storeScheduleKbm'])->name('schedule.store');
             Route::put('schedule/{id}', [KBMController::class, 'updateSchedule'])->name('schedule.update');
             Route::delete('schedule/{id}', [KBMController::class, 'destroySchedule'])->name('schedule.destroy');
         });
+        
+        // route kbm private 
+        Route::prefix('kbm-private')->name('admin.kbm.private.')->group(function () {
+            Route::get('schedule/{studentId}', [PrivateScheduleController::class, 'getStudentSchedules'])->name('schedule');
+            Route::post('schedule', [PrivateScheduleController::class, 'store'])->name('schedule.store');
+            Route::put('schedule/{id}', [PrivateScheduleController::class, 'update'])->name('schedule.update'); 
+            Route::delete('schedule/{id}', [PrivateScheduleController::class, 'destroy'])->name('schedule.destroy'); 
+        });           
 
     });
 

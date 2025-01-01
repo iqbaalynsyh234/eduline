@@ -60,7 +60,7 @@ class OnboardingController extends Controller
     
             if ($user->city) {
                 $districts = District::where('id_kab', $user->city)->get();
-                dd($districts);
+                // dd($districts);
                
                 if ($user->district) {
                     $subdistricts = Subdistrict::where('id_kec', $user->district)->get();
@@ -152,15 +152,14 @@ class OnboardingController extends Controller
     {
         $user = Auth::user();
     
-        // Debugging logs
-        \Log::info('Completing onboarding for user:', ['id' => $user->id]);
-    
-        $user->update(['onboarding_completed' => true]);
-    
-        \Log::info('Onboarding completed status:', ['onboarding_completed' => $user->onboarding_completed]);
+        $user->update([
+            'onboarding_completed' => 1, 
+        ]);
+
+        // dd($user->update);
     
         return redirect()->route('dashboard')->with('success', 'Onboarding completed. Welcome to the platform!');
     }
     
-    
+
 }

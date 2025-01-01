@@ -5,12 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kbm extends Model
+class CoachingSchedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'student_id', 'teacher_id', 'date', 'location', 'subject', 'fee', 'notes', 'start_time', 'end_time',
+        'student_id',
+        'teacher_id',
+        'date',
+        'start_time',
+        'end_time',
+        'method',
     ];    
 
     public function student()
@@ -22,6 +27,4 @@ class Kbm extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
-
-    
 }

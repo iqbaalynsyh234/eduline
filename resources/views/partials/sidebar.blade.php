@@ -62,20 +62,27 @@
                     <li><a href="{{ route('admin.master-data.user.index') }}">User</a></li>
                     <li><a href="{{ route('admin.master-data.teacher.index') }}">Guru</a></li>
                     <li><a href="{{ route('admin.master-data.student.index') }}">Siswa</a></li>
+                    <li><a href="{{ route('admin.master-data.target.index') }}">Target Students</a></li>
                     <li><a href="{{ route('admin.master-data.class.index') }}">Kelas</a></li>
-                    <li><a href="{{ route('admin.master-data.subject.index') }}">Mata Pelajaran</a></li>
+                    <li><a href="{{ route('admin.subject.index') }}">Mata Pelajaran</a></li>
                     <li><a href="{{ route('admin.master-data.material.index') }}">Materi</a></li>
                     <li><a href="{{ route('admin.master-data.academic-year.index') }}">Tahun Ajaran</a></li>
                     <li><a href="{{ route('admin.master-data.student-program.index') }}">Data Program Siswa</a></li>
                 </ul>
             </li>
-
+            <li class="{{ Request::routeIs('admin.educenter.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.educenter.index') }}">
+                    <i class="material-symbols-outlined">menu_book</i>
+                    <span class="nav-text">EduCenter</span>
+                </a>
+            </li>
             <li class="{{ Request::routeIs('admin.schedule.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.schedule.index') }}">
                     <i class="material-symbols-outlined">schedule</i>
                     <span class="nav-text">My Schedule</span>
                 </a>
             </li>
+
             @endrole
 
             <!-- Teacher Routes (Only visible to teachers) -->

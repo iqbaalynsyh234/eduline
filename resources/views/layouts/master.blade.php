@@ -6,9 +6,8 @@
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('eduline/images/favicon.png') }}" />
     <link href="{{ asset('eduline/vendor/wow-master/css/libs/animate.css') }}" rel="stylesheet" />
-    <link href="{{ asset('eduline/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Plugins css start-->
     <link href="{{ asset('eduline/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css') }}"
         rel="stylesheet" />
@@ -43,7 +42,6 @@
     <!--**** Scripts ***********-->
     <script src="{{asset('eduline/vendor/global/global.min.js')}}"></script>
     <script src="{{asset('eduline/vendor/chart.js/Chart.bundle.min.js')}}"></script>
-    <script src="{{ asset('eduline/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <!-- Plugins JS start-->
      
     <!-- Chart piety plugin files -->
@@ -69,6 +67,7 @@
     <script src="{{asset('eduline/js/custom.min.js')}}"></script>
     <script src="{{asset('eduline/js/demo.js')}}"></script>
     <!-- Plugins JS Ends-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
     <script src="{{ asset('eduline/js/styleSwitcher.js') }}"></script>
 </body>
 

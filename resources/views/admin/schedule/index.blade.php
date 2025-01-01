@@ -3,7 +3,6 @@
 @section('content')
 <div class="container-fluid">
     <div class="row mt-5">
-        <!-- Sidebar for Selecting Schedule Type -->
         <div class="col-xl-3">
             <h5>Pilih Jenis Jadwal</h5>
             <div>
@@ -14,6 +13,10 @@
             <div>
                 <input type="radio" name="schedule_type" value="kbm" id="kbm" data-target="#table-kbm">
                 <label for="kbm">Jadwal KBM</label>
+            </div>
+            <div>
+                <input type="radio" name="schedule_type" value="kbm_private" id="kbmprivate" data-target="#table-kbmprivate">
+                <label for="kbmprivate">Jadwal KBM Private</label>
             </div>
             <div>
                 <input type="radio" name="schedule_type" value="coaching" id="coaching" data-target="#table-coaching">
@@ -88,20 +91,82 @@
                                     <h6>{{ $student->full_name }}</h6>
                                     <button class="btn btn-link btn-sm p-0 text-decoration-none select-student"
                                         data-id="{{ $student->id }}">
-                                        <small>Lihat Jadwal</small>
+                                        <small>Tambah jadwal KBM Kelas</small>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
+                <!-- Navigasi Pagination -->
+                <div class="d-flex justify-content-center mt-3">
+                    @if ($students->hasPages())
+                        <nav>
+                            <ul class="pagination pagination-gutter">
+                                {{-- Previous Page Link --}}
+                                @if ($students->onFirstPage())
+                                    <li class="page-item page-indicator disabled" aria-disabled="true">
+                                        <span class="page-link"><i class="la la-angle-left"></i></span>
+                                    </li>
+                                @else
+                                    <li class="page-item page-indicator">
+                                        <a class="page-link" href="{{ $students->previousPageUrl() }}" rel="prev">
+                                            <i class="la la-angle-left"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($students->links()->elements as $element)
+                                    {{-- "Three Dots" Separator --}}
+                                    @if (is_string($element))
+                                        <li class="page-item disabled" aria-disabled="true">
+                                            <span class="page-link">{{ $element }}</span>
+                                        </li>
+                                    @endif
+
+                                    {{-- Array Of Links --}}
+                                    @if (is_array($element))
+                                        @foreach ($element as $page => $url)
+                                            @if ($page == $students->currentPage())
+                                                <li class="page-item active" aria-current="page">
+                                                    <span class="page-link">{{ $page }}</span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($students->hasMorePages())
+                                    <li class="page-item page-indicator">
+                                        <a class="page-link" href="{{ $students->nextPageUrl() }}" rel="next">
+                                            <i class="la la-angle-right"></i>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="page-item page-indicator disabled" aria-disabled="true">
+                                        <span class="page-link"><i class="la la-angle-right"></i></span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
+                    @endif
+                </div>
             </div>
+
 
             {{-- Table for KBM --}}
             <div id="table-kbm-schedule" class="schedule-table d-none">
                 <div class="d-flex justify-content-end mb-3">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addScheduleModalKbm">+ Add Data Jadwal</button>
                 </div>
+                <!-- Tombol Back -->
+                <button id="back-to-student-list" class="btn btn-secondary">Back</button>
                 <h5>Jadwal KBM</h5>
                 <div class="table-responsive full-data">
                     <table class="table-responsive-lg table display dataTablesCard student-tab dataTable no-footer"
@@ -121,6 +186,96 @@
                         </thead>
                         <tbody id="kbm-schedule-body">
                             <!-- Data dari jadwal KBM akan diisi secara dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            {{-- table schedule coaching--}}
+            <div id="table-coaching" class="schedule-table">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCoachingModal">+ Add
+                        Data Schedule Coaching</button>
+                </div>
+                <h5>Jadwal Coaching</h5>
+                <div class="table-responsive full-data">
+                    <table class="table-responsive-lg table display dataTablesCard student-tab dataTable no-footer"
+                        id="example-coaching">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>Tanggal</th>
+                                <th>Waktu</th>
+                                <th>Nama Guru</th>
+                                <th>Metode Coaching</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($coachings as $index => $coaching)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $coaching->student->full_name ?? 'N/A' }}</td>
+                                    <td>{{ $coaching->date }}</td>
+                                    <td>
+                                        @if($coaching->start_time && $coaching->end_time)
+                                            {{ \Carbon\Carbon::parse($coaching->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($coaching->end_time)->format('H:i') }}
+                                        @else
+                                            Not Specified
+                                        @endif
+                                    </td>
+                                    <td>{{ $coaching->teacher->full_name ?? 'N/A' }}</td>
+                                    <td>{{ $coaching->method }}</td>
+                                    <td class="text-end">
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-warning btn-sm edit-coaching"
+                                            data-id="{{ $coaching->id }}"
+                                            data-student="{{ $coaching->student_id }}"
+                                            data-date="{{ $coaching->date }}"
+                                            data-start-time="{{ $coaching->start_time }}"
+                                            data-end-time="{{ $coaching->end_time }}"
+                                            data-method="{{ $coaching->method }}">
+                                            Edit
+                                        </button>
+                                        <!-- Delete Button -->
+                                        <button class="btn btn-danger btn-sm delete-coaching" data-id="{{ $coaching->id }}">
+                                                Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+
+            {{-- table KBM Private--}}
+            <div id="table-kbmprivate" class="schedule-table">
+                <h5 class="mb-3">Pilih Siswa untuk Jadwal KBM Private</h5>
+                <div class="table-responsive full-data">
+                    <table class="table-responsive-lg table display dataTablesCard student-tab dataTable no-footer"
+                        id="example-kbm-private">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($students as $index => $student)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $student->full_name }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.admin.kbm.private.schedule', ['studentId' => $student->id]) }}" 
+                                        class="btn btn-primary btn-sm">
+                                            <i class="fas fa-calendar-alt"></i>Tambah Jadwal KBM Private
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -293,6 +448,185 @@
     </div>
 </div>
 
+{{-- Modal Edit Schedule KBM --}}
+<div class="modal fade" id="editKbmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editKbmForm">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="editKbmId">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Jadwal KBM</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editKbmStudentId" class="form-label">Nama Siswa</label>
+                        <select name="student_id" id="editKbmStudentId" class="form-control" required>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmDate" class="form-label">Tanggal</label>
+                        <input type="date" name="date" id="editKbmDate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmTime" class="form-label">Waktu</label>
+                        <input type="time" name="time" id="editKbmTime" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmSubject" class="form-label">Mata Pelajaran</label>
+                        <input type="text" name="subject" id="editKbmSubject" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmLocation" class="form-label">Lokasi</label>
+                        <input type="text" name="location" id="editKbmLocation" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmTeacherId" class="form-label">Guru</label>
+                        <select name="teacher_id" id="editKbmTeacherId" class="form-control" required>
+                            @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmFee" class="form-label">Fee Guru</label>
+                        <input type="number" name="fee" id="editKbmFee" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Modal add coaching--}}
+<div class="modal fade" id="addCoachingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="createCoachingForm">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Add Coaching Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="studentId" class="form-label">Student</label>
+                        <select name="student_id" id="studentId" class="form-control" required>
+                            <option value="" disabled selected>Select Student</option>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teacherId" class="form-label">Teacher</label>
+                        <select name="teacher_id" id="teacherId" class="form-control" required>
+                            <option value="" disabled selected>Select Teacher</option>
+                            @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" name="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_time" class="form-label">Start Time</label>
+                        <input type="time" name="start_time" id="start_time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_time" class="form-label">End Time</label>
+                        <input type="time" name="end_time" id="end_time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="method" class="form-label">Method</label>
+                        <select name="method" id="method" class="form-control" required>
+                            <option value="" disabled selected>Select Method</option>
+                            <option value="home_visit">Home Visit</option>
+                            <option value="office_visit">Office Visit</option>
+                            <option value="online_zoom">Online Zoom</option>
+                            <option value="phone_call">Phone Call</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{{-- edit modal coaching--}}
+<div class="modal fade" id="editCoachingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editCoachingForm">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="editCoachingId">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Coaching Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editStudentId" class="form-label">Student</label>
+                        <select name="student_id" id="editStudentId" class="form-control" required>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTeacherId" class="form-label">Teacher</label>
+                        <select name="teacher_id" id="editTeacherId" class="form-control" required>
+                            @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDate" class="form-label">Date</label>
+                        <input type="date" name="date" id="editDate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_start_time" class="form-label">Start Time</label>
+                        <input type="time" name="start_time" id="edit_start_time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_end_time" class="form-label">End Time</label>
+                        <input type="time" name="end_time" id="edit_end_time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMethod" class="form-label">Method</label>
+                        <select name="method" id="editMethod" class="form-control" required>
+                            <option value="home_visit">Home Visit</option>
+                            <option value="office_visit">Office Visit</option>
+                            <option value="online_zoom">Online Zoom</option>
+                            <option value="phone_call">Phone Call</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- Modal Edit Schedule -->
 <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -344,6 +678,338 @@
 @endsection
 @push('scripts')
     <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const backButton = document.getElementById('back-to-student-list');
+            const studentTable = document.getElementById('table-kbm');
+            const kbmScheduleTable = document.getElementById('table-kbm-schedule');
+            backButton.addEventListener('click', () => {
+                console.log("aku di click");
+                kbmScheduleTable.classList.add('d-none');
+                studentTable.classList.remove('d-none');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentButtons = document.querySelectorAll('.select-student-private');
+            const tableKbmPrivateSchedule = document.getElementById('table-kbmprivate-schedule');
+            const tableKbmPrivate = document.getElementById('table-kbmprivate');
+            const studentNameElement = document.getElementById('selected-student-name');
+            const studentIdInput = document.getElementById('selected-student-id');
+
+            studentButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const studentId = button.dataset.id;
+                    const studentName = button.dataset.name;
+
+                    // Update nama siswa di tabel
+                    studentNameElement.textContent = studentName;
+                    studentIdInput.value = studentId;
+
+                    // Tampilkan tabel KBM Private dan sembunyikan daftar siswa
+                    tableKbmPrivateSchedule.classList.remove('d-none');
+                    tableKbmPrivate.classList.add('d-none');
+                });
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentButtons = document.querySelectorAll('.select-student-private');
+            const tableKbmPrivateSchedule = document.getElementById('table-kbmprivate-schedule');
+            const tableKbmPrivate = document.getElementById('table-kbmprivate');
+            const studentNameElement = document.getElementById('selected-student-name');
+            const studentIdInput = document.getElementById('selected-student-id');
+            const kbmPrivateBody = document.getElementById('kbm-private-schedule-body');
+
+            // Saat tombol "Tambah Jadwal KBM Private" diklik
+            studentButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const studentId = button.dataset.id;
+                    const studentName = button.dataset.name;
+
+                    // Update nama siswa di tabel
+                    studentNameElement.textContent = studentName;
+                    studentIdInput.value = studentId;
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const backButton = document.getElementById('back-to-student-list');
+            const tableKbmPrivateSchedule = document.getElementById('table-kbmprivate-schedule');
+            const tableKbmPrivate = document.getElementById('table-kbmprivate');
+
+            backButton.addEventListener('click', () => {
+                tableKbmPrivateSchedule.classList.add('d-none');
+                tableKbmPrivate.classList.remove('d-none');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const kbmPrivateBody = document.getElementById('kbm-private-schedule-body');
+            const addPrivateScheduleForm = document.getElementById('addPrivateScheduleForm');
+            const addPrivateScheduleModal = new bootstrap.Modal(document.getElementById('addPrivateScheduleModal'));
+            
+            addPrivateScheduleForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(addPrivateScheduleForm);
+
+                fetch('/admin/kbm-private/schedule', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || 'Validation error.');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        Swal.fire('Success!', data.message, 'success').then(() => {
+                            addPrivateScheduleModal.hide();
+                            location.reload(); 
+                        });
+                    })
+                    .catch(error => {
+                        Swal.fire('Error!', error.message || 'Failed to add schedule.', 'error');
+                    });
+            });
+
+            // Delete
+            kbmPrivateBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-schedule')) {
+                    const scheduleId = e.target.dataset.id;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action cannot be undone.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            fetch(`/admin/kbm-private/schedule/${scheduleId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    'Accept': 'application/json',
+                                },
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire('Deleted!', data.message, 'success').then(() => {
+                                        location.reload();
+                                    });
+                                })
+                                .catch(error => Swal.fire('Error!', 'Failed to delete the schedule.', 'error'));
+                        }
+                    });
+                }
+            });
+
+            // Edit
+            kbmPrivateBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-schedule')) {
+                    const scheduleId = e.target.dataset.id;
+
+                    fetch(`/admin/kbm-private/schedule/${scheduleId}/edit`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const modal = new bootstrap.Modal(document.getElementById('editPrivateScheduleModal'));
+                            document.getElementById('editPrivateScheduleId').value = data.id;
+                            document.getElementById('editDate').value = data.date;
+                            document.getElementById('editTime').value = data.time;
+                            document.getElementById('editSubject').value = data.subject;
+                            document.getElementById('editLocation').value = data.location;
+                            document.getElementById('editTeacherId').value = data.teacher_id;
+                            document.getElementById('editFee').value = data.fee;
+                            modal.show();
+                        })
+                        .catch(error => Swal.fire('Error!', 'Failed to fetch schedule data.', 'error'));
+                }
+            });
+        });
+
+        // add coaching data
+        document.addEventListener('DOMContentLoaded', () => {
+            const createModal = new bootstrap.Modal(document.getElementById('addCoachingModal'));
+            const editModal = new bootstrap.Modal(document.getElementById('editCoachingModal'));
+
+            // Handle form submission for adding a coaching schedule
+            document.getElementById('createCoachingForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                console.log(formData);
+
+                fetch(`/admin/coaching/store`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            if (err.errors) throw err;
+                            throw new Error('Unexpected error occurred');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    Swal.fire('Success', data.message, 'success').then(() => {
+                        createModal.hide();
+                        location.reload();
+                    });
+                })
+                .catch(err => {
+                    if (err.errors) {
+                        Swal.fire({
+                            title: 'Validation Error',
+                            html: Object.values(err.errors).map(error => `<p>${error}</p>`).join(''),
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                        });
+                    } else {
+                        Swal.fire('Error', err.message || 'Failed to add coaching schedule.', 'error');
+                    }
+                });
+            });
+
+           // edit modal data coaching
+           document.querySelectorAll('.edit-coaching').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    const studentId = button.dataset.student;
+                    const date = button.dataset.date;
+                    const startTime = button.dataset.startTime;
+                    const endTime = button.dataset.endTime;
+                    const method = button.dataset.method;
+
+                    document.getElementById('editCoachingId').value = id;
+                    document.getElementById('editStudentId').value = studentId;
+                    document.getElementById('editDate').value = date;
+                    document.getElementById('edit_start_time').value = startTime;
+                    document.getElementById('edit_end_time').value = endTime;
+                    document.getElementById('editMethod').value = method;
+
+                    const editModal = new bootstrap.Modal(document.getElementById('editCoachingModal'));
+                    editModal.show();
+                });
+            });
+
+            // Handle form submission for editing a coaching schedule
+            document.getElementById('editCoachingForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const id = document.getElementById('editCoachingId').value;
+                const formData = new FormData(e.target);
+
+                fetch(`/admin/coaching/update/${id}`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.fire('Success', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    })
+                    .catch(err => {
+                        Swal.fire('Error', err.message || 'Failed to update coaching schedule.', 'error');
+                    });
+            });
+
+
+            // Handle delete action
+            document.querySelectorAll('.delete-coaching').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action cannot be undone.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            fetch(`/admin/coaching/delete/${id}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    'Accept': 'application/json',
+                                },
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire('Deleted', data.message, 'success').then(() => {
+                                        location.reload();
+                                    });
+                                })
+                                .catch(err => {
+                                    Swal.fire('Error', err.message || 'Failed to delete coaching schedule.', 'error');
+                                });
+                        }
+                    });
+                });
+            });
+        });
+
+        // edit kbm 
+        document.querySelectorAll('.edit-schedule-kbm').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.dataset.id;
+
+                fetch(`/admin/kbm/schedule/${id}/edit`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch schedule data');
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('editKbmId').value = data.id || '';
+                        document.getElementById('editKbmStudentId').value = data.student_id || '';
+                        document.getElementById('editKbmDate').value = data.date || '';
+                        document.getElementById('editKbmTime').value = data.start_time || '';
+                        document.getElementById('editKbmSubject').value = data.subject || '';
+                        document.getElementById('editKbmLocation').value = data.location || '';
+                        document.getElementById('editKbmTeacherId').value = data.teacher_id || '';
+                        document.getElementById('editKbmFee').value = data.fee || '';
+
+                        const editKbmModal = new bootstrap.Modal(document.getElementById('editKbmModal'));
+                        editKbmModal.show();
+                    })
+                    .catch(err => {
+                        console.error('Error fetching KBM schedule:', err);
+                        Swal.fire('Error', 'Failed to fetch schedule data.', 'error');
+                    });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const radios = document.querySelectorAll('input[name="schedule_type"]');
             const tables = document.querySelectorAll('.schedule-table');
@@ -377,6 +1043,7 @@
             // Change visible table based on radio button
             radios.forEach(radio => {
                 radio.addEventListener('change', updateVisibleTable);
+                // console.log(`Radio selected: ${radio.value}`);
             });
 
             // Function to fetch KBM schedule for selected student
@@ -399,16 +1066,29 @@
                                 const row = `
                                     <tr>
                                         <td>${index + 1}</td>
-                                        <td>${kbm.student.full_name}</td>
+                                        <td>${kbm.student }</td>
                                         <td>${kbm.date}</td>
-                                        <td>${kbm.time || '-'}</td>
+                                        <td>${kbm.start_time && kbm.end_time ? `${kbm.start_time} - ${kbm.end_time}` : '-'}</td>
                                         <td>${kbm.subject}</td>
                                         <td>${kbm.location}</td>
-                                        <td>${kbm.teacher ? kbm.teacher.full_name : '-'}</td>
+                                        <td>${kbm.teacher}</td>
                                         <td>${kbm.fee ? 'Rp ' + parseFloat(kbm.fee).toLocaleString('id-ID') : '-'}</td>
                                         <td class="text-end">
-                                            <button class="btn btn-warning btn-sm edit-schedule" data-id="${kbm.id}">Edit</button>
-                                            <button class="btn btn-danger btn-sm delete-schedule" data-id="${kbm.id}">Delete</button>
+                                            <button class="btn btn-warning btn-sm edit-schedule-kbm" 
+                                                    data-id="${kbm.id}" 
+                                                    data-student="${kbm.student_id}" 
+                                                    data-date="${kbm.date}" 
+                                                    data-start-time="${kbm.start_time}" 
+                                                    data-end-time="${kbm.end_time}" 
+                                                    data-location="${kbm.location}" 
+                                                    data-subject="${kbm.subject}" 
+                                                    data-teacher="${kbm.teacher_id}" 
+                                                    data-fee="${kbm.fee}">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-sm delete-schedule" data-id="${kbm.id}">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>`;
                                 kbmBody.insertAdjacentHTML('beforeend', row);
@@ -435,11 +1115,11 @@
                 });
             });
 
-            // Handle back button to return to student list
-            backButton.addEventListener('click', () => {
-                document.getElementById('table-kbm-schedule').classList.add('d-none');
-                document.getElementById('table-kbm').classList.remove('d-none');
-            });
+            // // Handle back button to return to student list
+            // backButton.addEventListener('click', () => {
+            //     document.getElementById('table-kbm-schedule').classList.add('d-none');
+            //     document.getElementById('table-kbm').classList.remove('d-none');
+            // });
 
             // Handle form submission for KBM schedule
             formKbm.addEventListener('submit', (event) => {
@@ -572,14 +1252,15 @@
             // Initialize visible table
             updateVisibleTable();
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            const deleteButtons = document.querySelectorAll('.delete-schedule');
 
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const deleteButtons = document.querySelectorAll('.delete-schedule');
+ 
             deleteButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     const scheduleId = button.dataset.id;
 
-                    // Show confirmation dialog
                     Swal.fire({
                         title: 'Are you sure?',
                         text: 'Do you really want to delete this schedule? This action cannot be undone.',
@@ -634,6 +1315,32 @@
                     });
                 });
             });
+        });
+
+        // coaching 
+        document.addEventListener('DOMContentLoaded', () => {
+            const radios = document.querySelectorAll('input[name="schedule_type"]');
+            const tables = document.querySelectorAll('.schedule-table');
+
+            const updateVisibleTable = () => {
+                tables.forEach(table => table.classList.add('d-none'));
+                const activeRadio = document.querySelector('input[name="schedule_type"]:checked');
+                if (activeRadio) {
+                    const target = activeRadio.dataset.target;
+                    const targetElement = document.querySelector(target);
+                    if (targetElement) {
+                        targetElement.classList.remove('d-none');
+                    }
+                }
+            };
+
+            // Change visible table based on radio button
+            radios.forEach(radio => {
+                radio.addEventListener('change', updateVisibleTable);
+            });
+
+            // Initialize visible table
+            updateVisibleTable();
         });
     </script>
 @endpush

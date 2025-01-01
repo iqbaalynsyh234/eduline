@@ -33,7 +33,7 @@ class Assessment extends Model
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
-    }
+    }    
 
     /**
      * Accessor for formatted date and time.

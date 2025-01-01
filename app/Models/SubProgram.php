@@ -17,6 +17,11 @@ class SubProgram extends Model
         return $this->belongsTo(Program::class);
     }
 
+    public function eModules()
+    {
+        return $this->hasMany(EModule::class);
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);

@@ -130,32 +130,32 @@
                         <label for="female">Perempuan</label>
                     </div>
                 </div>
+                <!-- Provinsi -->
                 <div class="col-md-4">
                     <label for="province">Provinsi</label>
                     <select id="province" name="address[province]" class="form-control" required>
-                        <option value="">Pilih Provinsi</option>
                         @foreach($provinces as $province)
                             <option value="{{ $province->id_prov }}">{{ $province->nama }}</option>
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Kab/Kota -->
                 <div class="col-md-4">
                     <label for="city">Kab/Kota</label>
-                    <select id="city" name="address[city]" class="form-control selectpicker" required>
-                        <option value="">Pilih Kota</option>
-                    </select>
+                    <select id="city" name="address[city]" class="form-control selectpicker" required></select>
                 </div>
+
+                <!-- Kecamatan -->
                 <div class="col-md-4">
                     <label for="district">Kecamatan</label>
-                    <select id="district" name="address[district]" class="form-control selectpicker" required>
-                        <option value="">Pilih Kecamatan</option>
-                    </select>
+                    <select id="district" name="address[district]" class="form-control selectpicker" required></select>
                 </div>
+
+                <!-- Kelurahan -->
                 <div class="col-md-6">
                     <label for="subdistrict">Kelurahan</label>
-                    <select id="subdistrict" name="address[subdistrict]" class="form-control selectpicker" required>
-                        <option value="">Pilih Kelurahan</option>
-                    </select>
+                    <select id="subdistrict" name="address[subdistrict]" class="form-control selectpicker" required></select>
                 </div>
                 <div class="col-md-6">
                     <label>Kode Pos</label>
@@ -175,105 +175,102 @@
     </div>
 </div>
 <script>
-    document.getElementById('province').addEventListener('change', function () {
-        const provinceId = this.value;
-        const cityDropdown = document.getElementById('city');
-        const districtDropdown = document.getElementById('district');
-        const subdistrictDropdown = document.getElementById('subdistrict');
+document.getElementById('province').addEventListener('change', function () {
+    const provinceId = this.value;
+    const cityDropdown = document.getElementById('city');
+    const districtDropdown = document.getElementById('district');
+    const subdistrictDropdown = document.getElementById('subdistrict');
 
-        cityDropdown.innerHTML = '<option value="">Memuat data kota...</option>';
-        districtDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
-        subdistrictDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>';
+    cityDropdown.innerHTML = '<option value="">Pilih Kota</option>';
+    districtDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
+    subdistrictDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>';
 
-        if (provinceId) {
-            fetch(`/get-cities/${provinceId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    let options = '<option value="">Pilih Kota</option>';
-                    data.forEach(city => {
-                        options += `<option value="${city.id_kab}">${city.nama}</option>`;
-                    });
-                    cityDropdown.innerHTML = options;
-
-                    if ($(cityDropdown).hasClass('selectpicker')) {
-                        $(cityDropdown).selectpicker('refresh');
-                    }
-
-                    cityDropdown.dispatchEvent(new Event('change'));
-                })
-                .catch(error => {
-                    console.error("Error fetching cities:", error);
+    if (provinceId) {
+        fetch(`/get-cities/${provinceId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let options = '<option value="">Pilih Kota</option>'; 
+                data.forEach(city => {
+                    options += `<option value="${city.id_kab}">${city.nama}</option>`;
                 });
-        }
-    });
 
-    document.getElementById('city').addEventListener('change', function () {
-        const cityId = this.value;
-        const districtDropdown = document.getElementById('district');
-        districtDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                cityDropdown.innerHTML = options;
 
-        if (cityId) {
-            console.log("Fetching districts for city ID:", cityId);
-            fetch(`/get-districts/${cityId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Districts fetched:", data);
-                    let options = '<option value="">Pilih Kecamatan</option>';
-                    data.forEach(district => {
-                        options += `<option value="${district.id_kec}">${district.nama}</option>`;
-                    });
-                    districtDropdown.innerHTML = options;
+                if ($(cityDropdown).hasClass('selectpicker')) {
+                    $(cityDropdown).selectpicker('refresh');
+                }
 
-                    if ($(districtDropdown).hasClass('selectpicker')) {
-                        $(districtDropdown).selectpicker('refresh');
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching districts:", error);
+                cityDropdown.dispatchEvent(new Event('change'));
+            })
+            .catch(error => {
+                console.error("Error fetching cities:", error);
+            });
+    }
+});
+
+document.getElementById('city').addEventListener('change', function () {
+    const cityId = this.value;
+    const districtDropdown = document.getElementById('district');
+    districtDropdown.innerHTML = '<option value="">Pilih Kecamatan</option>';
+
+    if (cityId) {
+        fetch(`/get-districts/${cityId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let options = '<option value="">Pilih Kecamatan</option>'; 
+                data.forEach(district => {
+                    options += `<option value="${district.id_kec}">${district.nama}</option>`;
                 });
-        }
-    });
+                districtDropdown.innerHTML = options;
 
-    document.getElementById('district').addEventListener('change', function () {
-        const districtId = this.value;
-        const subdistrictDropdown = document.getElementById('subdistrict');
-        subdistrictDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>'; 
+                if ($(districtDropdown).hasClass('selectpicker')) {
+                    $(districtDropdown).selectpicker('refresh');
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching districts:", error);
+            });
+    }
+});
 
-        if (districtId) {
-            console.log("Fetching subdistricts for district ID:", districtId);
-            fetch(`/get-subdistricts/${districtId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Subdistricts fetched:", data);
-                    let options = '<option value="">Pilih Kelurahan</option>';
-                    data.forEach(subdistrict => {
-                        options += `<option value="${subdistrict.id_kel}">${subdistrict.nama}</option>`;
-                    });
-                    subdistrictDropdown.innerHTML = options;
+document.getElementById('district').addEventListener('change', function () {
+    const districtId = this.value;
+    const subdistrictDropdown = document.getElementById('subdistrict');
+    subdistrictDropdown.innerHTML = '<option value="">Pilih Kelurahan</option>'; 
 
-                    if ($(subdistrictDropdown).hasClass('selectpicker')) {
-                        $(subdistrictDropdown).selectpicker('refresh');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching subdistricts:', error);
+    if (districtId) {
+        fetch(`/get-subdistricts/${districtId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let options = '<option value="">Pilih Kelurahan</option>'; // Pastikan hanya satu "Pilih Kelurahan"
+                data.forEach(subdistrict => {
+                    options += `<option value="${subdistrict.id_kel}">${subdistrict.nama}</option>`;
                 });
-        }
-    });
+                subdistrictDropdown.innerHTML = options;
+
+                if ($(subdistrictDropdown).hasClass('selectpicker')) {
+                    $(subdistrictDropdown).selectpicker('refresh');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching subdistricts:', error);
+            });
+    }
+});
 </script>
 @endsection
