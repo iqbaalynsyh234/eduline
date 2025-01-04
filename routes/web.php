@@ -126,27 +126,28 @@ Route::middleware(['auth', 'check.status'])->group(function () {
         });
 
         // mata pelajaran routes
-        Route::prefix('matapelajaran')->name('subject.')->group(function () {
+        Route::prefix('subject')->name('subject.')->group(function () {
             Route::get('/', [MataPelajaranController::class, 'index'])->name('index'); 
             Route::get('/create', [MataPelajaranController::class, 'create'])->name('create'); 
             Route::post('/', [MataPelajaranController::class, 'store'])->name('store'); 
-            Route::get('/{subject}/edit', [MataPelajaranController::class, 'edit'])->name('edit'); 
-            Route::put('/{subject}', [MataPelajaranController::class, 'update'])->name('update'); 
-            Route::delete('/{subject}', [MataPelajaranController::class, 'destroy'])->name('destroy'); 
+            Route::get('/{slug}/edit', [MataPelajaranController::class, 'edit'])->name('edit'); 
+            Route::put('/{slug}', [MataPelajaranController::class, 'update'])->name('update'); 
+            Route::delete('/{slug}', [MataPelajaranController::class, 'destroy'])->name('destroy'); 
         });
 
         // educenter module 
         Route::prefix('educenter')->name('educenter.')->group(function () {
             Route::get('/select-brand', [EduCenterController::class, 'selectBrand'])->name('select_brand');
-            Route::get('/select-subprogram/{eModuleId}', [EduCenterController::class, 'selectSubprogram'])->name('educenter.select_subprogram');
+            Route::get('/select-subprogram/{eModuleId}/{brand_id}', [EduCenterController::class, 'selectSubprogram'])->name('educenter.select_subprogram');
             Route::post('/save-selected-brand', [EduCenterController::class, 'saveSelectedBrand'])->name('save_selected_brand');
             Route::get('/', [EduCenterController::class, 'index'])->name('index');
-            Route::post('/save-selected-subprogram', [EduCenterController::class, 'saveSelectedSubprogram'])
-            ->name('educenter.save_selected_program');
+            Route::post('/save-selected-subprogram', [EduCenterController::class, 'saveSelectedSubprogram'])->name('educenter.save_selected_program');
             Route::get('/select-program', [EduCenterController::class, 'selectProgram'])->name('select_program');
             Route::get('/e-module', [EduCenterController::class, 'eModule'])->name('e_module');
-            Route::get('/paket-soal', [EduCenterController::class, 'paketSoal'])->name('paket_soal');
-            Route::get('/assign-paket-soal', [EduCenterController::class, 'assignPaketSoal'])->name('assign_paket_soal'); 
+            Route::get('/paket-soal/{eModuleId}', [EduCenterController::class, 'paketSoal'])->name('paket_module');
+            Route::post('/subjects/{id}/upload-pdf', [EduCenterController::class, 'uploadPdf'])->name('subjects.upload-pdf');
+            Route::post('/subjects/{id}/upload-video', [EduCenterController::class, 'uploadVideo'])->name('subjects.upload-video');
+            Route::get('/assign-paket-soal', [EduCenterController::class, 'assignPaketSoal'])->name('assign_paket_module'); 
         });
 
         // Coaching Schedule Routes
@@ -160,52 +161,52 @@ Route::middleware(['auth', 'check.status'])->group(function () {
         Route::put('/assessment/{assessment}', [AdminController::class, 'updateSchedule'])->name('admin.schedule.update');
         Route::delete('/schedule/{schedule}', [AdminController::class, 'destroy'])->name('schedule.destroy');
         
-        // route KBM 
+        // Jadwal KBM
         Route::prefix('kbm')->name('kbm.')->group(function () {
             Route::get('schedule/{studentId}/data', [KBMController::class, 'getStudentSchedule'])->name('schedule.data');
-            Route::get('schedule/{id}/edit', [KBMController::class, 'editSchedule'])->name('schedule.edit'); 
+            Route::get('schedule/{id}/edit', [KBMController::class, 'editSchedule'])->name('schedule.edit');
             Route::post('schedule', [KBMController::class, 'storeScheduleKbm'])->name('schedule.store');
             Route::put('schedule/{id}', [KBMController::class, 'updateSchedule'])->name('schedule.update');
             Route::delete('schedule/{id}', [KBMController::class, 'destroySchedule'])->name('schedule.destroy');
         });
         
         // route kbm private 
-        Route::prefix('kbm-private')->name('admin.kbm.private.')->group(function () {
+        Route::prefix('kbm-private')->name('kbm.private.')->group(function () {
             Route::get('schedule/{studentId}', [PrivateScheduleController::class, 'getStudentSchedules'])->name('schedule');
             Route::post('schedule', [PrivateScheduleController::class, 'store'])->name('schedule.store');
-            Route::put('schedule/{id}', [PrivateScheduleController::class, 'update'])->name('schedule.update'); 
-            Route::delete('schedule/{id}', [PrivateScheduleController::class, 'destroy'])->name('schedule.destroy'); 
-        });           
+            Route::put('schedule/{id}', [PrivateScheduleController::class, 'update'])->name('schedule.update');
+            Route::delete('schedule/{id}', [PrivateScheduleController::class, 'destroy'])->name('schedule.destroy');
+        });            
 
     });
 
     // Student Routes
     Route::middleware(['role:student'])->prefix('student')->name('student.')->group(function () {
-
         // Dashboard student 
         Route::get('/dashboard', [DashboardController::class, 'studentDashboard'])->name('dashboard');
         Route::post('/student/profile', [DashboardController::class, 'updateStudent'])->name('student.profile.update');
         Route::get('/student/profile', [DashboardController::class, 'editStudent'])->name('profile'); 
         Route::get('/parent-profile', [ProfileController::class, 'parentProfile'])->name('parent.profile');
-        Route::post('/student/parent/profile', [DashboardController::class, 'updateParentProfile'])
-        ->name('student.parent.profile.update');
-
+        Route::post('/student/parent/profile', [DashboardController::class, 'updateParentProfile'])->name('student.parent.profile.update');
+    
         // My Targets
         Route::prefix('targets')->name('targets.')->group(function () {
             Route::get('/my-targets', [DashboardController::class, 'myTargets'])->name('my_targets');
             Route::get('/{slug}', [DashboardController::class, 'targetDetails'])->name('details');
         });
-
-        // Edu Center
+    
+        // Edu Center e-module
         Route::get('/edu-center', [DashboardController::class, 'eduCenterOverview'])->name('edu_center.overview');
-        Route::get('/edu-center/module/{slug}', [DashboardController::class, 'moduleDetails'])->name('edu_center.module');
+        // Route::get('/edu-center/module/{id}', [EduCenterController::class, 'eModuleStudent'])->name('edu_center.module');
+        Route::get('/edu-center/module/{slug}', [EduCenterController::class, 'eModuleBySlug'])->name('edu_center.module');
+
     
         // My Schedule
         Route::get('/schedule', [DashboardController::class, 'schedule'])->name('schedule');
-    
+        
         // Teacher Profile
         Route::get('/teacher-profile', [DashboardController::class, 'teacherProfile'])->name('teacher.profile');
-    
+        
         // Learning Report
         Route::prefix('learning-report')->name('learning_report.')->group(function () {
             Route::get('/my-score/assessment', [DashboardController::class, 'myScoreAssessment'])->name('my_score.assessment');
@@ -215,6 +216,7 @@ Route::middleware(['auth', 'check.status'])->group(function () {
             Route::get('/my-report', [DashboardController::class, 'myReport'])->name('my_report');
         });
     });
+    
 });
 
 require __DIR__.'/auth.php';

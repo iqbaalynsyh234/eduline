@@ -33,27 +33,6 @@ class KBMController extends Controller
             ];
         }));
     }
-    function editSchedule($id)
-    {
-        $schedule = Kbm::with(['student', 'teacher'])->find($id);
-
-        if (!$schedule) {
-            return response()->json(['message' => 'Schedule not found'], 404);
-        }
-
-        return response()->json([
-            'id' => $schedule->id,
-            'student' => $schedule->student_id,
-            'date' => $schedule->date,
-            'start_time' => $schedule->start_time,
-            'end_time' => $schedule->end_time,
-            'location' => $schedule->location,
-            'subject' => $schedule->subject,
-            'teacher' => $schedule->teacher_id,
-            'fee' => $schedule->fee,
-        ]);
-    }
-
     function storeScheduleKbm(Request $request)
     {
         $rules = [
@@ -103,38 +82,50 @@ class KBMController extends Controller
             ], 500);
         }
     }
+    public function editSchedule($id)
+    {
+        $schedule = Kbm::findOrFail($id);
+        return response()->json($schedule);
+    }
+
     function updateSchedule(Request $request, $id)
     {
         $rules = [
-            'student_id' => 'required|exists:users,id',
             'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
             'subject' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'teacher_id' => 'required|exists:users,id',
-            'fee' => 'required|numeric|min:0',
+            'fee' => 'nullable|numeric|min:0',
         ];
-
+    
         $validator = Validator::make($request->all(), $rules);
-
+    
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation Error',
                 'errors' => $validator->errors(),
             ], 422);
         }
-
+    
         $schedule = Kbm::findOrFail($id);
-
-        $schedule->update($request->all());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Jadwal KBM berhasil diperbarui.',
-        ]);
-    }
-
+    
+        try {
+            $schedule->update($request->all());
+    
+            return response()->json([
+                'message' => 'Schedule updated successfully.',
+                'schedule' => $schedule,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update schedule.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }    
+    
     function destroySchedule($id)
     {
         $schedule = Kbm::findOrFail($id);

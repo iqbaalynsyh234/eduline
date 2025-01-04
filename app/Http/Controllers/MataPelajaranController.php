@@ -25,13 +25,15 @@ class MataPelajaranController extends Controller
             'code' => 'required|string|max:50|unique:subjects',
             'type' => 'required|in:mandatory,optional',
         ]);
-
+    
         Subject::create($request->all());
+
         return redirect()->route('admin.subject.index')->with('success', 'Subject created successfully.');
     }
 
-    public function edit(Subject $subject)
+    public function edit($slug)
     {
+        $subject = Subject::where('slug', $slug)->firstOrFail();
         return view('admin.subject.edit', compact('subject'));
     }
 
@@ -47,8 +49,9 @@ class MataPelajaranController extends Controller
         return redirect()->route('admin.subject.index')->with('success', 'Subject updated successfully.');
     }
 
-    public function destroy(Subject $subject)
+    public function destroy($slug)
     {
+        $subject = Subject::where('slug', $slug)->firstOrFail();
         $subject->delete();
         return redirect()->route('admin.subject.index')->with('success', 'Subject deleted successfully.');
     }

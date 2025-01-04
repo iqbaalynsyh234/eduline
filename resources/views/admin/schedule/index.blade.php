@@ -226,7 +226,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $coaching->teacher->full_name ?? 'N/A' }}</td>
-                                    <td>{{ $coaching->method }}</td>
+                                    <td>{{ str_replace('_', ' ', $coaching->method) }}</td>
                                     <td class="text-end">
                                         <!-- Edit Button -->
                                         <button class="btn btn-warning btn-sm edit-coaching"
@@ -269,7 +269,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $student->full_name }}</td>
                                     <td>
-                                        <a href="{{ route('admin.admin.kbm.private.schedule', ['studentId' => $student->id]) }}" 
+                                        <a href="{{ route('admin.kbm.private.schedule', ['studentId' => $student->id]) }}" 
                                         class="btn btn-primary btn-sm">
                                             <i class="fas fa-calendar-alt"></i>Tambah Jadwal KBM Private
                                         </a>
@@ -447,65 +447,6 @@
         </form>
     </div>
 </div>
-
-{{-- Modal Edit Schedule KBM --}}
-<div class="modal fade" id="editKbmModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="editKbmForm">
-            @csrf
-            @method('PUT')
-            <input type="hidden" id="editKbmId">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Jadwal KBM</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editKbmStudentId" class="form-label">Nama Siswa</label>
-                        <select name="student_id" id="editKbmStudentId" class="form-control" required>
-                            @foreach ($students as $student)
-                                <option value="{{ $student->id }}">{{ $student->full_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmDate" class="form-label">Tanggal</label>
-                        <input type="date" name="date" id="editKbmDate" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmTime" class="form-label">Waktu</label>
-                        <input type="time" name="time" id="editKbmTime" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmSubject" class="form-label">Mata Pelajaran</label>
-                        <input type="text" name="subject" id="editKbmSubject" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmLocation" class="form-label">Lokasi</label>
-                        <input type="text" name="location" id="editKbmLocation" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmTeacherId" class="form-label">Guru</label>
-                        <select name="teacher_id" id="editKbmTeacherId" class="form-control" required>
-                            @foreach ($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editKbmFee" class="form-label">Fee Guru</label>
-                        <input type="number" name="fee" id="editKbmFee" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 {{-- Modal add coaching--}}
 <div class="modal fade" id="addCoachingModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -675,16 +616,195 @@
         </div>
     </div>
 </div>
+
+{{-- modal edit KBM --}}
+<div class="modal fade" id="editKbmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editKbmForm">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="editKbmId">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Jadwal KBM</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editKbmStudentId" class="form-label">Nama Siswa</label>
+                        <select id="editKbmStudentId" class="form-control" required>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmDate" class="form-label">Tanggal</label>
+                        <input type="date" id="editKbmDate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmStartTime" class="form-label">Jam Mulai</label>
+                        <input type="time" id="editKbmStartTime" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmEndTime" class="form-label">Jam Selesai</label>
+                        <input type="time" id="editKbmEndTime" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmSubject" class="form-label">Mata Pelajaran</label>
+                        <input type="text" id="editKbmSubject" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmLocation" class="form-label">Lokasi</label>
+                        <input type="text" id="editKbmLocation" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmTeacherId" class="form-label">Guru</label>
+                        <select id="editKbmTeacherId" class="form-control" required>
+                            @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKbmFee" class="form-label">Fee Guru</label>
+                        <input type="number" id="editKbmFee" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection
 @push('scripts')
     <script>
+       document.addEventListener('DOMContentLoaded', () => {
+            const kbmBody = document.getElementById('kbm-schedule-body');
+
+            // Handle Edit Schedule Button Click
+            kbmBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-schedule-kbm')) {
+                    const id = e.target.dataset.id;
+
+                    // Fetch schedule data from API
+                    fetch(`/admin/kbm/schedule/${id}/edit`, {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json' },
+                    })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Failed to fetch schedule data');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data) {
+                                // Populate edit modal fields
+                                document.getElementById('editKbmId').value = data.id;
+                                document.getElementById('editKbmDate').value = data.date;
+                                document.getElementById('editKbmStartTime').value = data.start_time;
+                                document.getElementById('editKbmEndTime').value = data.end_time;
+                                document.getElementById('editKbmSubject').value = data.subject;
+                                document.getElementById('editKbmLocation').value = data.location;
+                                document.getElementById('editKbmFee').value = data.fee;
+
+                                const studentSelect = document.getElementById('editKbmStudentId');
+                                Array.from(studentSelect.options).forEach(option => {
+                                    option.selected = option.value == data.student_id;
+                                });
+
+                                const teacherSelect = document.getElementById('editKbmTeacherId');
+                                Array.from(teacherSelect.options).forEach(option => {
+                                    option.selected = option.value == data.teacher_id;
+                                });
+
+                                // Show the modal
+                                const editModal = new bootstrap.Modal(document.getElementById('editKbmModal'));
+                                editModal.show();
+                            } else {
+                                Swal.fire('Error', 'No data found for this schedule.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', error.message || 'Failed to fetch schedule data.', 'error');
+                        });
+                }
+            });
+
+            // Handle Update Schedule Form Submission
+            const editKbmForm = document.getElementById('editKbmForm');
+            editKbmForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const id = document.getElementById('editKbmId').value;
+                const formData = new FormData(editKbmForm);
+
+                fetch(`/admin/kbm/schedule/${id}`, {
+                    method: 'PUT',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to update schedule');
+                        return response.json();
+                    })
+                    .then(data => {
+                        Swal.fire('Success!', data.message, 'success').then(() => location.reload());
+                    })
+                    .catch(error => {
+                        Swal.fire('Error', error.message || 'Failed to update schedule.', 'error');
+                    });
+            });
+
+            // Handle Delete Schedule
+            kbmBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-schedule')) {
+                    const id = e.target.dataset.id;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action cannot be undone.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'No, cancel!',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`/admin/kbm/schedule/${id}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    'Accept': 'application/json',
+                                },
+                            })
+                                .then(response => {
+                                    if (!response.ok) throw new Error('Failed to delete schedule');
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    Swal.fire('Deleted!', data.message, 'success').then(() => location.reload());
+                                })
+                                .catch(error => {
+                                    Swal.fire('Error', 'Failed to delete schedule.', 'error');
+                                });
+                        }
+                    });
+                }
+            });
+        });
+
 
         document.addEventListener('DOMContentLoaded', () => {
             const backButton = document.getElementById('back-to-student-list');
             const studentTable = document.getElementById('table-kbm');
             const kbmScheduleTable = document.getElementById('table-kbm-schedule');
             backButton.addEventListener('click', () => {
-                console.log("aku di click");
+                // console.log("aku di click");
                 kbmScheduleTable.classList.add('d-none');
                 studentTable.classList.remove('d-none');
             });
@@ -897,8 +1017,8 @@
                     const id = button.dataset.id;
                     const studentId = button.dataset.student;
                     const date = button.dataset.date;
-                    const startTime = button.dataset.startTime;
-                    const endTime = button.dataset.endTime;
+                    const startTime = button.dataset.startTime.split(':').slice(0, 2).join(':'); 
+                    const endTime = button.dataset.endTime.split(':').slice(0, 2).join(':');   
                     const method = button.dataset.method;
 
                     document.getElementById('editCoachingId').value = id;
@@ -912,6 +1032,7 @@
                     editModal.show();
                 });
             });
+
 
             // Handle form submission for editing a coaching schedule
             document.getElementById('editCoachingForm').addEventListener('submit', (e) => {
@@ -1068,7 +1189,13 @@
                                         <td>${index + 1}</td>
                                         <td>${kbm.student }</td>
                                         <td>${kbm.date}</td>
-                                        <td>${kbm.start_time && kbm.end_time ? `${kbm.start_time} - ${kbm.end_time}` : '-'}</td>
+                                       <td>
+                                            ${
+                                                kbm.start_time && kbm.end_time 
+                                                    ? `${kbm.start_time.split(':').slice(0, 2).join(':')} - ${kbm.end_time.split(':').slice(0, 2).join(':')}` 
+                                                    : '-'
+                                            }
+                                        </td>
                                         <td>${kbm.subject}</td>
                                         <td>${kbm.location}</td>
                                         <td>${kbm.teacher}</td>

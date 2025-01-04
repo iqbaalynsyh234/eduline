@@ -22,7 +22,8 @@
   <link rel="stylesheet" href="{{ asset('eduline/vendor/swiper/css/swiper-bundle.min.css') }}" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
   <link href="{{asset('eduline/css/style.css')}}" rel="stylesheet" />
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  
 </head>
 
 <body>

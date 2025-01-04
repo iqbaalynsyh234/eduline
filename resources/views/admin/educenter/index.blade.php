@@ -27,7 +27,7 @@
 
         <!-- Card 2: Paket Soal -->
         <div class="col-md-4 col-sm-12 mb-4">
-            <a href="{{ route('admin.educenter.paket_soal') }}" class="card shadow text-decoration-none">
+            <a href="{{ route('admin.educenter.paket_module', parameters: '') }}" class="card shadow text-decoration-none">
                 <div class="card-body text-center">
                     <img src="{{ asset('eduline/images/educenter/Elemen-Eduline.png') }}" alt="E-Module" class="mb-3" style="width: 100px;">
                     <h5 class="card-title">Paket Soal</h5>
@@ -37,9 +37,10 @@
                 </div>
             </a>
         </div>
+        
         <!-- Card 3: Assign Paket Soal -->
         <div class="col-md-4 col-sm-12 mb-4">
-            <a href="{{ route('admin.educenter.assign_paket_soal') }}" class="card shadow text-decoration-none">
+            <a href="{{ route('admin.educenter.assign_paket_module') }}" class="card shadow text-decoration-none">
                 <div class="card-body text-center">
                     <img src="{{ asset('eduline/images/educenter/Elemen-Eduline.png') }}" alt="E-Module" class="mb-3" style="width: 100px;">
                     <h5 class="card-title">Assign Paket Soal</h5>

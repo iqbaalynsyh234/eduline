@@ -10,7 +10,7 @@ class EModule extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['brand_id', 'program_id', 'subprogram_id'];
+    protected $fillable = ['subject_id', 'pdf_path', 'youtube_link', 'subprogram_id', 'brand_id', 'title'];
 
     public function subprogram()
     {

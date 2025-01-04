@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Target;
+use App\Models\Subject;
 use App\Models\StudentModule;
 class DashboardController extends Controller
 {
@@ -127,11 +128,11 @@ class DashboardController extends Controller
         return view('student.targets.details', compact('target'));
     }
 
-    function eduCenterOverview()
+    public function eduCenterOverview()
     {
-        $modules = StudentModule::where('user_id', auth()->id())->get();
-    
-        return view('student.edu_center.index', compact('modules'));
+        $subjects = Subject::all();
+
+        return view('student.edu_center.index', compact('subjects'));
     }
 
     function moduleDetails($slug)

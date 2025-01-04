@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->string('type');
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('e_modules', function (Blueprint $table) {
+            $table->string('title')->nullable()->after('pdf_path');
         });
-        
     }
 
     /**
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::table('e_modules', function (Blueprint $table) {
+            //
+        });
     }
 };
